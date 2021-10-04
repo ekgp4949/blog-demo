@@ -1,11 +1,11 @@
 package com.blog.demo.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.blog.demo.dto.TodoDTO;
 import com.blog.demo.model.TodoEntity;
 import com.blog.demo.persistence.TodoRepository;
 
@@ -29,6 +29,20 @@ public class TodoService {
 	
 	public List<TodoEntity> retrieve(final String userId) {
 		return todoRepository.findByUserId(userId);
+	}
+	
+	public List<TodoEntity> update(final TodoEntity entity) {
+		validate(entity);
+		
+		final Optional<TodoEntity> original = todoRepository.findById(entity.getId());
+		original.ifPresent(todo -> {
+			todo.setTitle(entity.getTitle());
+			todo.setDone(entity.isDone());
+			
+			todoRepository.save(todo);
+		});
+		
+		return retrieve(entity.getUserId());
 	}
 	
 	private void validate(final TodoEntity entity) {
