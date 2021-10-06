@@ -1,3 +1,4 @@
+import { Paper, List } from '@material-ui/core';
 import React from 'react';
 import './App.css';
 import Todo from './Todo'
@@ -18,9 +19,16 @@ class App extends React.Component {
 
   render() {
 
-    var todoItems = this.state.item.map((item, index) => (
-      <Todo item={item} key={item.id} />
-    ));
+    var todoItems = this.state.item.length > 0 && (<Paper>
+        <List>
+          {
+            this.state.item.map((item, index) => (
+              <Todo item={item} key={item.id} />
+            ))
+          }
+        </List>
+      </Paper>
+    );
 
     /*
     for(let i = 0; i < this.state.item.length; i++ ) {
