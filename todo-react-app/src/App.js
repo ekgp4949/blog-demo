@@ -10,11 +10,7 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      items: [
-        { id: 0, title: "Hello world 1", done: true },
-        { id: 1, title: "Hello world 2", done: false },
-        { id: 2, title: "Hello world 3", done: true },
-      ]
+      items: []
     }
   }
 
@@ -26,13 +22,20 @@ class App extends React.Component {
     this.setState({ items: thisItems });
   };
 
+  delete = (item) => {
+    const thisItems = this.state.items;
+    const newItems = thisItems.filter(e => e.id !== item.id);
+    this.setState({ items : newItems });
+  };
+
+
   render() {
 
     var todoItems = this.state.items.length > 0 && (<Paper>
         <List>
           {
             this.state.items.map((item, index) => (
-              <Todo item={item} key={item.id} />
+              <Todo item={item} key={item.id} delete={this.delete} />
             ))
           }
         </List>
