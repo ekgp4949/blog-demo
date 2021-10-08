@@ -28,6 +28,9 @@ class App extends React.Component {
     this.setState({ items : newItems });
   };
 
+  checkItems = () => {
+    console.log(this.state.items)
+  };
 
   render() {
 
@@ -35,7 +38,7 @@ class App extends React.Component {
         <List>
           {
             this.state.items.map((item, index) => (
-              <Todo item={item} key={item.id} delete={this.delete} />
+              <Todo checkItems={this.checkItems} item={item} key={item.id} delete={this.delete} />
             ))
           }
         </List>
