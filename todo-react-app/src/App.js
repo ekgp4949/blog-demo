@@ -3,6 +3,7 @@ import React from 'react';
 import './App.css';
 import Todo from './Todo'
 import AddTodo from './AddTodo'
+import { call } from './service/ApiService'
 
 class App extends React.Component {
   
@@ -14,19 +15,39 @@ class App extends React.Component {
     }
   }
 
+  componentDidMount() {
+    call("/todo", "GET", null).then((response) => {
+      console.log(response)
+      this.setState({ items: response.data })
+    }, (error) => {
+      console.log(error.error)
+    });
+  };
+
   add = (item) => {
-    const thisItems = this.state.items;
-    item.id = "ID-" + thisItems.length;
-    item.done = false;
-    thisItems.push(item);
-    this.setState({ items: thisItems });
+    call("/todo", "POST", item).then((response) => 
+      this.setState({ items: response.data })
+    ).catch((error) => {
+      console.log(error.error)
+    });
   };
 
   delete = (item) => {
-    const thisItems = this.state.items;
-    const newItems = thisItems.filter(e => e.id !== item.id);
-    this.setState({ items : newItems });
+    call("/todo", "DELETE", item).then((response) => 
+      this.setState({ items : response.data })
+    ).catch((error) => {
+      console.log(error.error)
+    });
   };
+
+  update = (item) => {
+    console.log(item)
+    call("/todo", "PUT", item).then((response) => 
+      this.setState({ items: response.data })
+    ).catch((error) => {
+      console.log(error.error)
+    });
+  }
 
   checkItems = () => {
     console.log(this.state.items)
@@ -38,7 +59,12 @@ class App extends React.Component {
         <List>
           {
             this.state.items.map((item, index) => (
-              <Todo checkItems={this.checkItems} item={item} key={item.id} delete={this.delete} />
+              <Todo 
+                checkItems={this.checkItems} 
+                item={item} 
+                key={item.id} 
+                delete={this.delete} 
+                update={this.update}/>
             ))
           }
         </List>
@@ -57,28 +83,6 @@ class App extends React.Component {
       </div>
     );
   };
-
-  componentDidMount() {
-    const requestOptions = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    };
-
-    fetch("http://localhost:8080/todo", requestOptions)
-      .then((response) => response.json())
-      .then((response) => {
-        this.setState({
-          items: response.data
-        })
-      },
-      (error) => {
-        this.setState({ error })
-      })
-      
-  };
-
 
 }
 
