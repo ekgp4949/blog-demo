@@ -1,6 +1,7 @@
 package com.blog.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.blog.demo.model.UserEntity;
@@ -29,8 +30,12 @@ public class UserService {
 		return userRepository.save(userEntity);
 	}
 	
-	public UserEntity getByCredentials(final String email, final String password) {
-		return userRepository.findByEmailAndPassword(email, password);
+	public UserEntity getByCredentials(final String email, final String password, final PasswordEncoder passwordEncoder) {
+		UserEntity userEntity = userRepository.findByEmail(email);
+		if(userEntity != null && passwordEncoder.matches(password, userEntity.getPassword())) {
+			return userEntity;
+		}
+		return null;
 	}
 	
 	
