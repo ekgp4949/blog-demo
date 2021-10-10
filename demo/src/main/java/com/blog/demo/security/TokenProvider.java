@@ -18,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 public class TokenProvider {
 	private static final String SECRET_KET = "ASDFGHJKZXCVBNM123456";
 	
+	// UserController에서 signin 할 때 쓰는 함수
 	public String create(UserEntity userEntity) {
 		Date expireDate = Date.from(Instant.now().plus(1, ChronoUnit.DAYS));
 		
@@ -30,10 +31,11 @@ public class TokenProvider {
 			.compact();
 	}
 	
+	// SecurityFilter에서 쓰는 함수 
 	public String validateAndGetUserId(String token) {
 		Claims claims = Jwts.parser()
 			.setSigningKey(SECRET_KET)
-			.parseClaimsJwt(token)
+			.parseClaimsJws(token)
 			.getBody();
 		return claims.getSubject();
 	}
