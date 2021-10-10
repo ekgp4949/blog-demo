@@ -31,3 +31,10 @@ export function call(api, method, request) {
     });
 
 }
+
+export function signin(userDTO) {
+  return call("/auth/signin", "POST", userDTO)
+    .then((response) => {
+      window.location.href = "/";
+    })
+}
