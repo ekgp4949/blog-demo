@@ -3,7 +3,8 @@ import React from 'react';
 import './App.css';
 import Todo from './Todo'
 import AddTodo from './AddTodo'
-import { call, signin, signout } from './service/ApiService'
+import Loading from './Loading'
+import { call, signout } from './service/ApiService'
 
 
 class App extends React.Component {
@@ -12,14 +13,14 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      items: []
+      items: [],
+      loading: true
     }
   }
 
   componentDidMount() {
     call("/todo", "GET", null).then((response) => {
-      console.log(response)
-      this.setState({ items: response.data })
+      this.setState({ items: response.data, loading: false })
     }, (error) => {
       console.log(error.error)
     });
@@ -91,6 +92,18 @@ class App extends React.Component {
       </AppBar>
     );
 
+    var todoListPage = (
+      <div>
+        {navigationBar}
+        <AddTodo add={this.add}/>
+        {todoItems}
+      </div>
+    );
+
+    var content = todoListPage;
+    if(this.state.loading) {
+      content = <Loading/>;
+    }
     /*
     for(let i = 0; i < this.state.item.length; i++ ) {
       todoItems.push((<Todo item={this.state.item[i]} key={this.state.item[i].id} />));
@@ -98,9 +111,7 @@ class App extends React.Component {
     */
     return (
       <div className="App">
-        {navigationBar}
-        <AddTodo add={this.add}/>
-        {todoItems}
+        {content}
       </div>
     );
   };
