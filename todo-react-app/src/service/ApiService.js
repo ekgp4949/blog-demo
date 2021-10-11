@@ -1,10 +1,17 @@
 import { API_BASE_URL } from "../app-config";
 
 export function call(api, method, request) {
+  let headers = new Headers({
+    "Content-Type": "application/json"
+  }); 
+
+  const accessToken = localStorage.getItem("ACCESS_TOKEN");
+  if(accessToken && accessToken !== null) {
+    headers.append("Authorization", "Bearer "+accessToken);
+  }
+
   const options = {
-    headers: new Headers({
-      "Content-Type": "application/json"
-    }),
+    headers: headers,
     url: API_BASE_URL + api,
     method: method
   };
@@ -27,7 +34,7 @@ export function call(api, method, request) {
       if(error.status === 403) {
         window.location.href = "/login"; // redirect
       }
-      //return Promise.reject(json);
+      return Promise.reject(error);
     });
 
 }
@@ -35,6 +42,9 @@ export function call(api, method, request) {
 export function signin(userDTO) {
   return call("/auth/signin", "POST", userDTO)
     .then((response) => {
-      window.location.href = "/";
+      if(response.token) {
+        localStorage.setItem("ACCESS_TOKEN", response.token);
+        window.location.href = "/";
+      }
     })
 }

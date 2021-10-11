@@ -38,7 +38,7 @@ class Login extends React.Component {
                 fullWidth
                 name="email"
                 label="이메일 주소"
-                name="email"
+                type="email"
                 id="email"
                 autoComplete="email"
               />
