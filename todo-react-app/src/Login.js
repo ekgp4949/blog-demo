@@ -67,6 +67,13 @@ class Login extends React.Component {
             </Grid>
           </Grid>
         </form>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <Typography align="center" variant="subtitle2" onClick={}>
+              계정 생성
+            </Typography>
+          </Grid>
+        </Grid>
       </Container>
     );
   }
