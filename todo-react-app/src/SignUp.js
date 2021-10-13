@@ -1,21 +1,26 @@
-import { Button, Container, Grid, TextField, Typography, Link } from "@material-ui/core";
 import React from "react";
-import { signin } from "./service/ApiService";
+import { Container, Grid, Typography, TextField, Button, Link } from "@material-ui/core";
+import { signup } from "./service/ApiService";
 
-class Login extends React.Component {
+class SignUp extends React.Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+
   handleSubmit(event) {
     event.preventDefault();
-    // event.target 은 <form> node가 옴
     const data = new FormData(event.target);
+
+    const username = data.get("username");
     const email = data.get("email");
     const password = data.get("password");
-
-    signin({ email: email, password: password });
+    signup({ username: username, email: email, password: password }).then(
+      (response) => {
+        window.location.href = "/login";
+      }
+    );
   }
 
   render() {
@@ -24,13 +29,25 @@ class Login extends React.Component {
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Typography component="h1" variant="h5">
-              로그인
+              계정 생성
             </Typography>
           </Grid>
         </Grid>
         <form noValidate onSubmit={this.handleSubmit}>
           {" "}
           <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField 
+                variant="outlined"
+                required
+                fullWidth
+                name="username"
+                label="사용자 이름"
+                type="username"
+                id="username"
+                autoComplete="username"
+              />
+            </Grid>
             <Grid item xs={12}>
               <TextField 
                 variant="outlined"
@@ -62,12 +79,12 @@ class Login extends React.Component {
                 variant="contained"
                 color="primary"
               >
-                로그인
+                계정 생성
               </Button>
             </Grid>
             <Grid item>
-                <Link href="/signup" variant="body2">
-                새 계정 만들기
+              <Link href="/login" variant="body2">
+                이미 계정이 있습니까? 로그인 하세요.
               </Link>
             </Grid>
           </Grid>
@@ -75,7 +92,6 @@ class Login extends React.Component {
       </Container>
     );
   }
-
 }
 
-export default Login;
+export default SignUp;

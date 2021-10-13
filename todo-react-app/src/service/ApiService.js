@@ -47,6 +47,11 @@ export function signin(userDTO) {
         window.location.href = "/";
       }
     })
+    .catch((error) => {
+      if(error.error === "Login failed") {
+        alert("이메일 또는 패스워드를 다시 확인해주세요.")
+      }
+    });
 }
 
 export function signout() {
@@ -54,6 +59,6 @@ export function signout() {
   window.location.href = "/login";
 }
 
-export function signup() {
+export function signup(userDTO) {
   return call("/auth/signup", "POST", userDTO);
 }
