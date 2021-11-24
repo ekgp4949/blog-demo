@@ -12,6 +12,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.DayOfWeek;
+
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,5 +27,6 @@ public class TodoEntity {
 	private String id;
 	private String userId;
 	private String title;
-	private boolean done; // todo를 완료한경우 
+	private boolean done; // todo를 완료한경우
+	private int dayOfWeek;
 }
