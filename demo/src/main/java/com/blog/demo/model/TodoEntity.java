@@ -19,7 +19,7 @@ import java.time.DayOfWeek;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name="Todo")
+@Table(name="TODO")
 public class TodoEntity {
 	@Id
 	@GeneratedValue(generator = "system-uuid")

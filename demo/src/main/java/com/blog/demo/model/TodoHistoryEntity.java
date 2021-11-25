@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Builder
@@ -17,7 +18,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "TodoHistory")
+@Table(name = "TODO_HISTORY")
 public class TodoHistoryEntity {
     @Id
     @GeneratedValue(generator = "system-uuid")
@@ -27,5 +28,6 @@ public class TodoHistoryEntity {
     private String title;
     private boolean done;
     private int sort;
-    private LocalDateTime registeredDate;
+    private LocalDate registeredDate;
+    private LocalDateTime doneTime;
 }
