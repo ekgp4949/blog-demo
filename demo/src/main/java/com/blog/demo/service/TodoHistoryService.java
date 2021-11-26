@@ -20,8 +20,8 @@ public class TodoHistoryService {
     @Autowired
     TodoHistoryRepository todoHistoryRepository;
 
-    public List<TodoHistoryEntity> retrieve(final LocalDate time) {
-        return todoHistoryRepository.findByRegisteredDateOrderBySortAsc(time);
+    public List<TodoHistoryEntity> retrieve(final LocalDate date, final String userId) {
+        return todoHistoryRepository.findByTodoDateAndUserIdOrderBySortAsc(date, userId);
     }
 
     public List<TodoHistoryEntity> create(List<TodoHistoryEntity> items) {

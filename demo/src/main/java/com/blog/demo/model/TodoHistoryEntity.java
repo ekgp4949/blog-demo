@@ -29,5 +29,6 @@ public class TodoHistoryEntity {
     private boolean done;
     private int sort;
     private LocalDate registeredDate;
+    private LocalDate todoDate;
     private LocalDateTime doneTime;
 }

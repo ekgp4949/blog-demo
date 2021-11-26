@@ -7,5 +7,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface TodoHistoryRepository extends JpaRepository<TodoHistoryEntity, String> {
-    List<TodoHistoryEntity> findByRegisteredDateOrderBySortAsc(LocalDate time);
+    List<TodoHistoryEntity> findByRegisteredDateOrderBySortAsc(LocalDate date);
+    List<TodoHistoryEntity> findByTodoDateOrderBySortAsc(LocalDate date);
+
+    List<TodoHistoryEntity> findByTodoDateAndUserIdOrderBySortAsc(LocalDate date, String userId);
 }

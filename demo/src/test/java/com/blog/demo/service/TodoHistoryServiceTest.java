@@ -24,12 +24,13 @@ class TodoHistoryServiceTest {
     @Test
     @DisplayName("등록일 및 Sort 엔티티 조회 테스트")
     public void retrieveTest() {
-        List<TodoHistoryEntity> list = service.retrieve(LocalDate.now());
+        List<TodoHistoryEntity> list = service.retrieve(LocalDate.now().minusDays(1), "user1");
 
         Assertions.assertEquals(1, list.size());
         TodoHistoryEntity entity = list.get(0);
         Assertions.assertEquals(entity.getSort(), 1);
         Assertions.assertEquals(entity.getTitle(), "title1");
+        Assertions.assertEquals(entity.getTodoDate(), LocalDate.now().minusDays(1));
     }
 
     @BeforeEach
@@ -38,10 +39,11 @@ class TodoHistoryServiceTest {
             TodoHistoryEntity entity = TodoHistoryEntity.builder()
                     .sort(i)
                     .title("title"+i)
-                    .userId("user")
+                    .userId("user"+i)
                     .done(true)
                     .doneTime(LocalDateTime.now())
-                    .registeredDate(LocalDate.now().minusDays(i-1))
+                    .registeredDate(LocalDate.now())
+                    .todoDate(LocalDate.now().minusDays(1))
                     .build();
             repository.save(entity);
         }
