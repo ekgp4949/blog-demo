@@ -26,11 +26,22 @@ public class TodoService {
 		
 		return todoRepository.findByDayOfWeekAndUserIdOrderBySortAsc(entity.getDayOfWeek(), entity.getUserId());
 	}
-	
+
+	/**
+	 * 요일별 Todo 호출 시
+	 * @param dayOfWeek 요일
+	 * @param userId 유저 ID
+	 * @return TodoEntity 리스트
+	 * */
 	public List<TodoEntity> retrieve(final int dayOfWeek, final String userId) {
 		return todoRepository.findByDayOfWeekAndUserIdOrderBySortAsc(dayOfWeek, userId);
 	}
 
+	/**
+	 * 월~일 Todo 호출 시
+	 * @param userId 유저 ID
+	 * @return TodoEntity 리스트
+	 * */
 	public List<TodoEntity> retrieve(final String userId) {
 		return todoRepository.findByUserIdOrderBySortAsc(userId);
 	}
