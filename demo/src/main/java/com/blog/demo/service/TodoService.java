@@ -24,11 +24,15 @@ public class TodoService {
 		todoRepository.save(entity);
 		log.info("Entity id : {} is saved", entity.getId());
 		
-		return todoRepository.findByUserId(entity.getUserId());
+		return todoRepository.findByDayOfWeekAndUserIdOrderBySortAsc(entity.getDayOfWeek(), entity.getUserId());
 	}
 	
+	public List<TodoEntity> retrieve(final int dayOfWeek, final String userId) {
+		return todoRepository.findByDayOfWeekAndUserIdOrderBySortAsc(dayOfWeek, userId);
+	}
+
 	public List<TodoEntity> retrieve(final String userId) {
-		return todoRepository.findByUserId(userId);
+		return todoRepository.findByUserIdOrderBySortAsc(userId);
 	}
 	
 	public List<TodoEntity> update(final TodoEntity entity) {

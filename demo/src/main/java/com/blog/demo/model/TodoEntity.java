@@ -28,5 +28,6 @@ public class TodoEntity {
 	private String userId;
 	private String title;
 	private boolean done; // todo를 완료한경우
+	private int sort;
 	private int dayOfWeek;
 }

@@ -6,13 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.blog.demo.dto.ResponseDTO;
 import com.blog.demo.dto.TodoDTO;
@@ -47,7 +41,15 @@ public class TodoController {
 			return ResponseEntity.badRequest().body(responseDTO);
 		}
 	}
-	
+
+	@GetMapping(value = "/{dayOfWeek}")
+	public ResponseEntity<?> retrieveTodoList(@PathVariable int dayOfWeek, @AuthenticationPrincipal String userId) {
+		List<TodoEntity> entities = todoService.retrieve(dayOfWeek, userId);
+		List<TodoDTO> dtos = entities.stream().map(TodoDTO::new).collect(Collectors.toList());
+		ResponseDTO<TodoDTO> responseDTO = ResponseDTO.<TodoDTO>builder().data(dtos).build();
+		return ResponseEntity.ok().body(responseDTO);
+	}
+
 	@GetMapping
 	public ResponseEntity<?> retrieveTodoList(@AuthenticationPrincipal String userId) {
 		List<TodoEntity> entities = todoService.retrieve(userId);
