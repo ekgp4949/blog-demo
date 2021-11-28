@@ -4,7 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,7 +30,12 @@ public class TodoHistoryEntity {
     private String title;
     private boolean done;
     private int sort;
-    private LocalDate registeredDate;
+
+    @CreationTimestamp
+    private LocalDateTime registeredDateTime;
+
     private LocalDate todoDate;
+
+    @UpdateTimestamp
     private LocalDateTime doneTime;
 }

@@ -42,7 +42,7 @@ class TodoHistoryServiceTest {
                     .userId("user"+i)
                     .done(true)
                     .doneTime(LocalDateTime.now())
-                    .registeredDate(LocalDate.now())
+                    .registeredDateTime(LocalDateTime.now())
                     .todoDate(LocalDate.now().minusDays(1))
                     .build();
             repository.save(entity);

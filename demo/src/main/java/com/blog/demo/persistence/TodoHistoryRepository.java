@@ -9,7 +9,6 @@ import java.util.List;
 
 @Repository
 public interface TodoHistoryRepository extends JpaRepository<TodoHistoryEntity, String> {
-    List<TodoHistoryEntity> findByRegisteredDateOrderBySortAsc(LocalDate date);
     List<TodoHistoryEntity> findByTodoDateOrderBySortAsc(LocalDate date);
 
     List<TodoHistoryEntity> findByTodoDateAndUserIdOrderBySortAsc(LocalDate date, String userId);
