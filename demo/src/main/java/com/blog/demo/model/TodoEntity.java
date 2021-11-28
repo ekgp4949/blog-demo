@@ -1,10 +1,8 @@
 package com.blog.demo.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.GenericGenerator;
 
 import lombok.AllArgsConstructor;
@@ -14,6 +12,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.DayOfWeek;
 
+@DynamicInsert
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,7 +26,8 @@ public class TodoEntity {
 	private String id;
 	private String userId;
 	private String title;
-	private boolean done; // todo를 완료한경우
 	private int sort;
 	private int dayOfWeek;
+	@Column(columnDefinition = "varchar2(1) default 'Y'")
+	private String useYn;
 }

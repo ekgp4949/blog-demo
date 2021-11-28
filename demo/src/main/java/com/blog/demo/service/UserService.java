@@ -30,7 +30,9 @@ public class UserService {
 		return userRepository.save(userEntity);
 	}
 	
-	public UserEntity getByCredentials(final String email, final String password, final PasswordEncoder passwordEncoder) {
+	public UserEntity getByCredentials(final String email,
+									   final String password,
+									   final PasswordEncoder passwordEncoder) {
 		UserEntity userEntity = userRepository.findByEmail(email);
 		if(userEntity != null && passwordEncoder.matches(password, userEntity.getPassword())) {
 			return userEntity;

@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface TodoRepository extends JpaRepository<TodoEntity, String>{
 	List<TodoEntity> findByUserId(String userId);
-	List<TodoEntity> findByDayOfWeekAndUserIdOrderBySortAsc(int dayOfWeek, String userId);
+	List<TodoEntity> findByDayOfWeekAndUserIdAndUseYnOrderBySortAsc(int dayOfWeek, String userId, String useYn);
 
-	List<TodoEntity> findByUserIdOrderBySortAsc(String userId);
+	List<TodoEntity> findByUserIdAndUseYnOrderBySortAsc(String userId, String useYn);
 }

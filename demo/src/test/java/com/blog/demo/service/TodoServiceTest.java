@@ -20,7 +20,7 @@ public class TodoServiceTest {
 
     @Test
     @DisplayName("retrieve 오버로딩 메서드 테스트")
-    public void retrieve() {
+    public void retrieveTest() {
         List<TodoEntity> list1 = service.retrieve("user");
         List<TodoEntity> list2 = service.retrieve(1, "user");
 
@@ -35,8 +35,8 @@ public class TodoServiceTest {
                     .sort(i)
                     .title("title"+i)
                     .userId("user")
-                    .done(false)
                     .dayOfWeek(i)
+                    //.useYn("Y")
                     .build();
             repository.save(entity);
         }

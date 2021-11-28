@@ -17,14 +17,21 @@ public class TodoService {
 	
 	@Autowired
 	private TodoRepository todoRepository;
-	
+
+	/**
+	 * 요일별 Todo 추가 생성 시
+	 * @param entity Todo
+	 * @return 해당 요일 TodoEntity 리스트
+	 * */
 	public List<TodoEntity> create(final TodoEntity entity) {
 		validate(entity);
 		
 		todoRepository.save(entity);
 		log.info("Entity id : {} is saved", entity.getId());
 		
-		return todoRepository.findByDayOfWeekAndUserIdOrderBySortAsc(entity.getDayOfWeek(), entity.getUserId());
+		return todoRepository.findByDayOfWeekAndUserIdAndUseYnOrderBySortAsc(
+				entity.getDayOfWeek(), entity.getUserId(), "Y"
+		);
 	}
 
 	/**
@@ -34,7 +41,7 @@ public class TodoService {
 	 * @return TodoEntity 리스트
 	 * */
 	public List<TodoEntity> retrieve(final int dayOfWeek, final String userId) {
-		return todoRepository.findByDayOfWeekAndUserIdOrderBySortAsc(dayOfWeek, userId);
+		return todoRepository.findByDayOfWeekAndUserIdAndUseYnOrderBySortAsc(dayOfWeek, userId, "Y");
 	}
 
 	/**
@@ -43,34 +50,51 @@ public class TodoService {
 	 * @return TodoEntity 리스트
 	 * */
 	public List<TodoEntity> retrieve(final String userId) {
-		return todoRepository.findByUserIdOrderBySortAsc(userId);
+		return todoRepository.findByUserIdAndUseYnOrderBySortAsc(userId, "Y");
 	}
-	
+
+	/**
+	 * todo title 업데이트 시
+	 * @param entity Todo
+	 * @return TodoEntity 리스트
+	 * */
 	public List<TodoEntity> update(final TodoEntity entity) {
 		validate(entity);
-		
+
 		final Optional<TodoEntity> original = todoRepository.findById(entity.getId());
 		original.ifPresent(todo -> {
 			todo.setTitle(entity.getTitle());
-			todo.setDone(entity.isDone());
-			
 			todoRepository.save(todo);
 		});
-		
-		return retrieve(entity.getUserId());
+
+		return retrieve(entity.getDayOfWeek(), entity.getUserId());
 	}
-	
-	public List<TodoEntity> delete(final TodoEntity entity) {
+
+	/**
+	 * todo 삭제시 useYn: Y -> N 변경
+	 * @param entity Todo
+	 * @param userId 유저 ID
+	 * @return TodoEntity 리스트
+	 * */
+	public List<TodoEntity> delete(final TodoEntity entity, final String userId) {
 		validate(entity);
 		
 		try {
-			todoRepository.delete(entity);
+			//todoRepository.delete(entity);
+			final Optional<TodoEntity> original = todoRepository.findById(entity.getId());
+			original.ifPresent(todo -> {
+				if(!userId.equals(entity.getUserId())) {
+					throw new RuntimeException("Unknown User tried to delete todo: "+ entity.getId() + ", "+userId);
+				}
+				todo.setTitle(entity.getUseYn());
+				todoRepository.save(todo);
+			});
 		} catch(Exception e) {
 			log.error("error deleting entity ", entity.getId(), e);
 			throw new RuntimeException("error deleting entity "+ entity.getId());
 		}
 		
-		return retrieve(entity.getUserId());
+		return retrieve(entity.getDayOfWeek(), entity.getUserId());
 	}
 	
 	private void validate(final TodoEntity entity) {
