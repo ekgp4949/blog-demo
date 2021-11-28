@@ -4,17 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.*;
 
+import javax.persistence.*;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.Table;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+@DynamicInsert
+@DynamicUpdate
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,14 +27,14 @@ public class TodoHistoryEntity {
     private String id;
     private String userId;
     private String title;
-    private boolean done;
     private int sort;
-
     @CreationTimestamp
-    private LocalDateTime registeredDateTime;
-
     private LocalDate todoDate;
 
-    @UpdateTimestamp
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime registeredDateTime;
+
+    private boolean done;
     private LocalDateTime doneTime;
 }

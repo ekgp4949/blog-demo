@@ -9,6 +9,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
@@ -31,6 +32,26 @@ class TodoHistoryServiceTest {
         Assertions.assertEquals(entity.getSort(), 1);
         Assertions.assertEquals(entity.getTitle(), "title1");
         Assertions.assertEquals(entity.getTodoDate(), LocalDate.now().minusDays(1));
+    }
+
+    @Test
+    @DisplayName("@CreationTimestamp, @UpdateTimestamp, @DynamicInsert, @DynamicUpdate 테스트")
+    public void createTest() {
+        TodoHistoryEntity entity = TodoHistoryEntity.builder()
+                .title("doSomething")
+                .userId("user")
+                .build();
+        List<TodoHistoryEntity> list = new ArrayList<>();
+        list.add(entity);
+        List<TodoHistoryEntity> savedItems = service.create(list);
+        TodoHistoryEntity savedItem = savedItems.get(0);
+        System.out.println(savedItem);
+
+        Assertions.assertEquals(1, savedItems.size());
+        Assertions.assertNull(savedItem.getDoneTime());
+        Assertions.assertEquals(LocalDate.now(), savedItem.getTodoDate());
+        Assertions.assertNotEquals(null, savedItem.getRegisteredDateTime());
+        Assertions.assertEquals("doSomething", savedItem.getTitle());
     }
 
     @BeforeEach

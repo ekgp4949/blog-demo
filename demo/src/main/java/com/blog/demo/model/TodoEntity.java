@@ -3,6 +3,7 @@ package com.blog.demo.model;
 import javax.persistence.*;
 
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 
 import lombok.AllArgsConstructor;
@@ -13,6 +14,7 @@ import lombok.NoArgsConstructor;
 import java.time.DayOfWeek;
 
 @DynamicInsert
+@DynamicUpdate
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
