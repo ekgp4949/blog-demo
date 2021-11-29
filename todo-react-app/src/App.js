@@ -5,6 +5,7 @@ import Todo from './Todo'
 import AddTodo from './AddTodo'
 import Loading from './Loading'
 import { call, signout } from './service/ApiService'
+import DailyTodoBar from './DailyTodoBar';
 
 
 class App extends React.Component {
@@ -18,12 +19,14 @@ class App extends React.Component {
     }
   }
 
+  // 수정일: 2021-11-29 나중에 수정할 것
   componentDidMount() {
-    call("/todo", "GET", null).then((response) => {
-      this.setState({ items: response.data, loading: false })
-    }, (error) => {
-      console.log(error.error)
-    });
+    this.setState({ items: [], loading: false })
+    // call("/todo", "GET", null).then((response) => {
+    //   this.setState({ items: response.data, loading: false })
+    // }, (error) => {
+    //   console.log(error.error)
+    // });
   };
 
   add = (item) => {
@@ -95,6 +98,7 @@ class App extends React.Component {
     var todoListPage = (
       <div>
         {navigationBar}
+        <DailyTodoBar/>
         <AddTodo add={this.add}/>
         {todoItems}
       </div>
