@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { AppBar, Toolbar, Typography, Grid, Button } from '@material-ui/core';
+import { AppBar, Toolbar, Typography, Grid, Button } from '@mui/material';
 import { signout } from '../service/ApiService'
 
 class NavigationBar extends React.Component {

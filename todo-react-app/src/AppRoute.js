@@ -2,8 +2,7 @@ import React from "react";
 import "./index.css"
 import App from "./App";
 import Login from "./Login";
-import { Box, Container } from "@material-ui/core";
-import { Typography } from "@material-ui/core";
+import { Box, Container, Typography } from "@mui/material";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import SignUp from "./SignUp"
 

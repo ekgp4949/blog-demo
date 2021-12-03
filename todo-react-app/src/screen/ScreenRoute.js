@@ -3,7 +3,7 @@ import TodoListScreen from './TodoListScreen';
 import DailyPlanScreen from './DailyPlanScreen';
 import AboutScreen from './AboutScreen';
 import { Route } from 'react-router';
-import { Paper } from '@material-ui/core';
+import { Paper } from '@mui/material';
 
 class ScreenRoutes extends React.Component {
   render() {

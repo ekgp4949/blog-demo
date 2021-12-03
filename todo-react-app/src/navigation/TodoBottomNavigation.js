@@ -2,10 +2,9 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import { DoneOutline, HowToReg } from '@material-ui/icons';
-import { ViewList } from '@mui/icons-material';
+import { ViewList, DoneOutline, HowToReg } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
-import { Paper } from '@material-ui/core';
+import { Paper } from '@mui/material';
 
 export default function TodoBottomNavigation() {
   const [value, setValue] = React.useState(0);
@@ -13,10 +12,11 @@ export default function TodoBottomNavigation() {
   return (
     <Paper 
       variant="outlined" 
-      sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} 
       square
     >
-      <Box sx={{ width: '100%' }}>
+      <Box
+        sx={{ width: '100%', bottom: 0 }} 
+      >
         <BottomNavigation
           showLabels
           value={value}
