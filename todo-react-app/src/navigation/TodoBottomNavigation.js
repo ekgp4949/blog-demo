@@ -6,29 +6,37 @@ import { ViewList, DoneOutline, HowToReg } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import { Paper } from '@mui/material';
 
-export default function TodoBottomNavigation() {
-  const [value, setValue] = React.useState(0);
+class TodoBottomNavigation extends React.Component {
+  constructor(props) {
+    super(props);
+    const path = window.location.pathname.split("/")[1];
+    this.state = { value: path };
+  }
 
-  return (
-    <Paper 
-      variant="outlined" 
-      square
-    >
-      <Box
-        sx={{ width: '100%', bottom: 0 }} 
+  render() {
+    return (
+      <Paper 
+        variant="outlined" 
+        square
       >
-        <BottomNavigation
-          showLabels
-          value={value}
-          onChange={(event, newValue) => {
-            setValue(newValue);
-          }}
+        <Box
+          sx={{ width: '100%', bottom: 0 }} 
         >
-          <BottomNavigationAction to={"/today"} LinkComponent={Link} value={"/today"} label="Today's" icon={<DoneOutline />} />
-          <BottomNavigationAction to={"/daily"} LinkComponent={Link} value={"/daily"} label="Plans" icon={<ViewList />} />
-          <BottomNavigationAction to={"/about"} LinkComponent={Link} value={"/about"} label="WhoAmI" icon={<HowToReg />} />
-        </BottomNavigation>
-      </Box>
-    </Paper>
-  );
+          <BottomNavigation
+            showLabels
+            value={this.state.value}
+            onChange={(event, newValue) => {
+              this.setState({ value: newValue });
+            }}
+          >
+            <BottomNavigationAction to={"/today"} LinkComponent={Link} value={"today"} label="Today's" icon={<DoneOutline />} />
+            <BottomNavigationAction to={"/daily"} LinkComponent={Link} value={"daily"} label="Plans" icon={<ViewList />} />
+            <BottomNavigationAction to={"/about"} LinkComponent={Link} value={"about"} label="WhoAmI" icon={<HowToReg />} />
+          </BottomNavigation>
+        </Box>
+      </Paper>
+    );
+  }
 }
+
+export default TodoBottomNavigation;

@@ -1,5 +1,4 @@
 import React from "react";
-import "./index.css"
 import App from "./App";
 import Login from "./Login";
 import { Box, Container, Typography } from "@mui/material";
@@ -14,11 +13,11 @@ function Copyright() {
   );
 }
 
-
 class AppRouter extends React.Component {
+
   render() {
     return (
-      <Container maxWidth="md">
+      <Container disableGutters maxWidth="md">
         <div>
           <Router>
             <div>
@@ -34,7 +33,7 @@ class AppRouter extends React.Component {
                 </Route>
               </Switch>
             </div>
-            <Box mt={5}>
+            <Box mt={3}>
               <Copyright />
             </Box>
           </Router>
