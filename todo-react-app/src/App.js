@@ -5,6 +5,7 @@ import { call } from './service/ApiService'
 import TodoBottomNavigation from './navigation/TodoBottomNavigation';
 import NavigationBar from './navigation/NavigationBar';
 import ScreenRoutes from './screen/ScreenRoute';
+import { Box } from '@mui/system';
 
 
 class App extends React.Component {
@@ -60,17 +61,17 @@ class App extends React.Component {
   render() {
 
     var todoListPage = (
-      <div>
+      <Box height="100%">
         <NavigationBar />
         <ScreenRoutes />
-        <TodoBottomNavigation/>
-      </div>
+        <TodoBottomNavigation />
+      </Box>
     );
 
     return (
-      <div className="App">
+      <Box className="App" height="100%">
         { this.state.loading ? <Loading/> : todoListPage  }
-      </div>
+      </Box>
     );
   };
 
