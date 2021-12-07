@@ -9,7 +9,7 @@ class AppRouter extends React.Component {
 
   render() {
     return (
-      <Container disableGutters={true} maxWidth="md">
+      <Container disableGutters={true} maxWidth="sm">
         <Box height="100vh">
           <Router>
             <Switch>
