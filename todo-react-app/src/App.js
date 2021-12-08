@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.css';
 import Loading from './Loading'
-import { call } from './service/ApiService'
 import TodoBottomNavigation from './navigation/TodoBottomNavigation';
 import NavigationBar from './navigation/NavigationBar';
 import ScreenRoutes from './screen/ScreenRoute';
@@ -29,30 +28,6 @@ class App extends React.Component {
     // });
   };
 
-  add = (item) => {
-    call("/todo", "POST", item).then((response) => 
-      this.setState({ items: response.data })
-    ).catch((error) => {
-      console.log(error.error)
-    });
-  };
-
-  delete = (item) => {
-    call("/todo", "DELETE", item).then((response) => 
-      this.setState({ items : response.data })
-    ).catch((error) => {
-      console.log(error.error)
-    });
-  };
-
-  update = (item) => {
-    console.log(item)
-    call("/todo", "PUT", item).then((response) => 
-      this.setState({ items: response.data })
-    ).catch((error) => {
-      console.log(error.error)
-    });
-  }
 
   checkItems = () => {
     console.log(this.state.items)
