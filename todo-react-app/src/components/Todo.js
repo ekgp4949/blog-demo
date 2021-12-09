@@ -49,7 +49,10 @@ class Todo extends React.Component {
     render() {
         const item = this.state.item;
         return (
-            <ListItem>
+            <ListItem
+                divider
+                dense
+            >
                 <Checkbox 
                     checked={item.done} 
                     onChange={this.checkBoxEventHandler}

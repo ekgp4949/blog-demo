@@ -4,7 +4,8 @@ import React from "react";
 class AddTodo extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { item: { title: "", dayOfWeek: props.dayOfWeek } };
+    this.dayOfWeek = props.dayOfWeek;
+    this.state = { item: { title: "", dayOfWeek: this.dayOfWeek } };
     this.add = props.add;
   }
 
@@ -16,9 +17,9 @@ class AddTodo extends React.Component {
 
   onButtonClick = (e) => {
       const thisItem = this.state.item;
-      if(thisItem.title.trim().length == 0) return;
+      if(thisItem.title.trim().length === 0) return;
       this.add(thisItem);
-      this.setState({ item: { title: "" } });
+      this.setState({ item: { title: "", dayOfWeek: this.dayOfWeek } });
   };
 
   enterKeyEventHandler = (e) => {

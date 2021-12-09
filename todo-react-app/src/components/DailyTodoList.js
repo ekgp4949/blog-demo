@@ -1,4 +1,4 @@
-import { List, Typography } from "@mui/material";
+import { List, ListItem, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 import { call } from "../service/ApiService";
@@ -14,8 +14,7 @@ class DailyTodoList extends React.Component {
 
   add = (item) => {
     call("/todo", "POST", item).then((response) => 
-      console.log(response.data)
-      //this.setState({ items: response.data })
+      this.setState({ items: response.data })
     ).catch((error) => {
       console.log(error.error)
     });
@@ -60,16 +59,21 @@ class DailyTodoList extends React.Component {
 
     return (
       <Box>
-        <List>
+        <List
+          dense
+        >
           { this.state.items.map(item => 
             (<Todo 
+              key={item.id}
               item={item}
               delete={this.delete}
               update={this.update}
             />)
           ) }
         </List>
-        <AddTodo add={this.add} dayOfWeek={this.state.dayOfWeek} />
+        <ListItem>
+          <AddTodo add={this.add} dayOfWeek={this.state.dayOfWeek} />
+        </ListItem>
       </Box>
     );
   }
