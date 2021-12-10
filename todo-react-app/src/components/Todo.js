@@ -28,7 +28,6 @@ class Todo extends React.Component {
         if(e.key === 'Enter') {
             this.setState({ readOnly: true });
             this.update(this.state.item);
-            this.checkItems();
         }
     };
 
@@ -43,7 +42,6 @@ class Todo extends React.Component {
         thisItem.done = !thisItem.done;
         this.setState({ item: thisItem });
         this.update(this.state.item);
-        this.checkItems();
     };
 
     render() {

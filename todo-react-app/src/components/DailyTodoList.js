@@ -11,7 +11,6 @@ class DailyTodoList extends React.Component {
     this.state = { items:[], loading: false, dayOfWeek: props.dayOfWeek };
   }
   
-
   add = (item) => {
     call("/todo", "POST", item).then((response) => 
       this.setState({ items: response.data })
@@ -29,7 +28,6 @@ class DailyTodoList extends React.Component {
   };
 
   update = (item) => {
-    console.log(item)
     call("/todo", "PUT", item).then((response) => 
       this.setState({ items: response.data })
     ).catch((error) => {
