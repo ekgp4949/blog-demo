@@ -8,8 +8,9 @@ import java.util.List;
 
 @Repository
 public interface TodoRepository extends JpaRepository<TodoEntity, String>{
-	List<TodoEntity> findByUserId(String userId);
-	List<TodoEntity> findByDayOfWeekAndUserIdAndUseYnOrderBySortAsc(int dayOfWeek, String userId, String useYn);
+	List<TodoEntity> findByDayOfWeekAndUserIdAndUseYnOrderByRegisteredDateTimeAsc(
+			int dayOfWeek, String userId, String useYn
+	);
 
-	List<TodoEntity> findByUserIdAndUseYnOrderBySortAsc(String userId, String useYn);
+	List<TodoEntity> findByUserIdAndUseYnOrderByRegisteredDateTimeAsc(String userId, String useYn);
 }

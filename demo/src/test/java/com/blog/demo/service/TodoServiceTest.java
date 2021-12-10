@@ -32,7 +32,6 @@ public class TodoServiceTest {
     void setUp() {
         for(int i = 1; i <= 10; i++) {
             TodoEntity entity = TodoEntity.builder()
-                    .sort(i)
                     .title("title"+i)
                     .userId("user")
                     .dayOfWeek(i)

@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface TodoHistoryRepository extends JpaRepository<TodoHistoryEntity, String> {
-    List<TodoHistoryEntity> findByTodoDateOrderBySortAsc(LocalDate date);
+    List<TodoHistoryEntity> findByTodoDateAndUserIdOrderByRegisteredDateTimeAsc(LocalDate date, String userId);
 
-    List<TodoHistoryEntity> findByTodoDateAndUserIdOrderBySortAsc(LocalDate date, String userId);
+    Integer deleteByParentTodoIdAndTodoDate(String parentTodoId, LocalDate date);
 }

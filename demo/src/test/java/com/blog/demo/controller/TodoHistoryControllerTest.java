@@ -71,7 +71,6 @@ public class TodoHistoryControllerTest {
 
         for(int i = 1; i <= 10; i++) {
             TodoHistoryEntity entity = TodoHistoryEntity.builder()
-                    .sort(i)
                     .title("title"+i)
                     .userId("admin")
                     .done(true)

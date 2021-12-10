@@ -37,4 +37,13 @@ public class TodoHistoryController {
         }
     }
 
+    @DeleteMapping
+    public ResponseEntity<?> deleteTodoHistory(@RequestBody TodoHistoryEntity entity) {
+        try {
+            List<TodoHistoryEntity> list = todoHistoryService.delete(entity);
+            return ResponseEntity.ok(ResponseDTO.<TodoHistoryEntity>builder().data(list).build());
+        } catch(Exception e) {
+            return ResponseEntity.badRequest().body(ResponseDTO.builder().error(e.getMessage()).build());
+        }
+    }
 }

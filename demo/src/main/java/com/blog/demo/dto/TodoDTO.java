@@ -15,13 +15,11 @@ public class TodoDTO {
 	private String id;
 	private String title;
 	private int dayOfWeek;
-	private int sort;
 
 	public TodoDTO(final TodoEntity entity) {
 		this.id = entity.getId();
 		this.title = entity.getTitle();
 		this.dayOfWeek = entity.getDayOfWeek();
-		this.sort = entity.getSort();
 	}
 	
 	public static TodoEntity toEntity(final TodoDTO dto) {
@@ -29,7 +27,6 @@ public class TodoDTO {
 			.id(dto.getId())
 			.title(dto.getTitle())
 			.dayOfWeek(dto.getDayOfWeek())
-			.sort(dto.getSort())
 			.build();
 	}
 }

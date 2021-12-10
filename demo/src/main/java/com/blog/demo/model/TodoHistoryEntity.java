@@ -27,13 +27,19 @@ public class TodoHistoryEntity {
     private String id;
     private String userId;
     private String title;
-    private int sort;
+
+    private String parentTodoId;
+
     @CreationTimestamp
     private LocalDate todoDate;
 
     @CreationTimestamp
     @Column(updatable = false)
     private LocalDateTime registeredDateTime;
+
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime modifiedDateTime;
 
     private boolean done;
     private LocalDateTime doneTime;

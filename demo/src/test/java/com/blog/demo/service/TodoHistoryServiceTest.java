@@ -29,7 +29,6 @@ class TodoHistoryServiceTest {
 
         Assertions.assertEquals(1, list.size());
         TodoHistoryEntity entity = list.get(0);
-        Assertions.assertEquals(entity.getSort(), 1);
         Assertions.assertEquals(entity.getTitle(), "title1");
         Assertions.assertEquals(entity.getTodoDate(), LocalDate.now().minusDays(1));
     }
@@ -45,7 +44,6 @@ class TodoHistoryServiceTest {
         list.add(entity);
         List<TodoHistoryEntity> savedItems = service.create(list);
         TodoHistoryEntity savedItem = savedItems.get(0);
-        System.out.println(savedItem);
 
         Assertions.assertEquals(1, savedItems.size());
         Assertions.assertNull(savedItem.getDoneTime());
@@ -58,7 +56,6 @@ class TodoHistoryServiceTest {
     void setUp() {
         for(int i = 1; i <= 10; i++) {
             TodoHistoryEntity entity = TodoHistoryEntity.builder()
-                    .sort(i)
                     .title("title"+i)
                     .userId("user"+i)
                     .done(true)

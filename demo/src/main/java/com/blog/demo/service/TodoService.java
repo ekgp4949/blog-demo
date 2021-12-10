@@ -1,15 +1,17 @@
 package com.blog.demo.service;
 
-import java.util.List;
-import java.util.Optional;
-
+import com.blog.demo.model.TodoEntity;
+import com.blog.demo.model.TodoHistoryEntity;
+import com.blog.demo.persistence.TodoHistoryRepository;
+import com.blog.demo.persistence.TodoRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.blog.demo.model.TodoEntity;
-import com.blog.demo.persistence.TodoRepository;
-
-import lombok.extern.slf4j.Slf4j;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -18,18 +20,33 @@ public class TodoService {
 	@Autowired
 	private TodoRepository todoRepository;
 
+	@Autowired
+	private TodoHistoryRepository todoHistoryRepository;
+
 	/**
 	 * 요일별 Todo 추가 생성 시
 	 * @param entity Todo
 	 * @return 해당 요일 TodoEntity 리스트
 	 * */
+	@Transactional
 	public List<TodoEntity> create(final TodoEntity entity) {
 		validate(entity);
 		
-		todoRepository.save(entity);
+		TodoEntity savedEntity = todoRepository.save(entity);
 		log.info("Entity id : {} is saved", entity.getId());
-		
-		return todoRepository.findByDayOfWeekAndUserIdAndUseYnOrderBySortAsc(
+
+		LocalDate now = LocalDate.now();
+		if(entity.getDayOfWeek() == now.getDayOfWeek().getValue()) {
+			todoHistoryRepository.save(TodoHistoryEntity
+					.builder()
+					.userId(savedEntity.getUserId())
+					.title(savedEntity.getTitle())
+					.parentTodoId(savedEntity.getId())
+					.todoDate(now)
+					.build());
+		}
+
+		return todoRepository.findByDayOfWeekAndUserIdAndUseYnOrderByRegisteredDateTimeAsc(
 				entity.getDayOfWeek(), entity.getUserId(), "Y"
 		);
 	}
@@ -41,7 +58,8 @@ public class TodoService {
 	 * @return TodoEntity 리스트
 	 * */
 	public List<TodoEntity> retrieve(final int dayOfWeek, final String userId) {
-		return todoRepository.findByDayOfWeekAndUserIdAndUseYnOrderBySortAsc(dayOfWeek, userId, "Y");
+		return todoRepository
+				.findByDayOfWeekAndUserIdAndUseYnOrderByRegisteredDateTimeAsc(dayOfWeek, userId, "Y");
 	}
 
 	/**
@@ -50,7 +68,7 @@ public class TodoService {
 	 * @return TodoEntity 리스트
 	 * */
 	public List<TodoEntity> retrieve(final String userId) {
-		return todoRepository.findByUserIdAndUseYnOrderBySortAsc(userId, "Y");
+		return todoRepository.findByUserIdAndUseYnOrderByRegisteredDateTimeAsc(userId, "Y");
 	}
 
 	/**
@@ -86,8 +104,8 @@ public class TodoService {
 				if(!userId.equals(entity.getUserId())) {
 					throw new RuntimeException("Unknown User tried to delete todo: "+ entity.getId() + ", "+userId);
 				}
-				todo.setTitle(entity.getUseYn());
-				todoRepository.save(todo);
+				todo.setUseYn(entity.getUseYn());
+				TodoEntity deletedEntity = todoRepository.save(todo);
 			});
 		} catch(Exception e) {
 			log.error("error deleting entity ", entity.getId(), e);

@@ -22,7 +22,7 @@ public class TodoHistoryService {
     TodoHistoryRepository todoHistoryRepository;
 
     public List<TodoHistoryEntity> retrieve(final LocalDate date, final String userId) {
-        return todoHistoryRepository.findByTodoDateAndUserIdOrderBySortAsc(date, userId);
+        return todoHistoryRepository.findByTodoDateAndUserIdOrderByRegisteredDateTimeAsc(date, userId);
     }
 
     /**
@@ -47,6 +47,18 @@ public class TodoHistoryService {
             todo.setDone(entity.isDone());
             todoHistoryRepository.save(todo);
         });
+
+        return retrieve(LocalDate.now(), entity.getUserId());
+    }
+
+    /**
+     * todoHistory 삭제 시
+     * @param entity TodoHistory
+     * @return TodoHistoryEntity 리스트
+     * */
+    public List<TodoHistoryEntity> delete(final TodoHistoryEntity entity) {
+
+        todoHistoryRepository.delete(entity);
 
         return retrieve(LocalDate.now(), entity.getUserId());
     }

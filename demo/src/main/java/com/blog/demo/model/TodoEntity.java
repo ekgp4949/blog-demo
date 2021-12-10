@@ -2,6 +2,7 @@ package com.blog.demo.model;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
@@ -12,6 +13,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 
 @DynamicInsert
 @DynamicUpdate
@@ -28,8 +30,15 @@ public class TodoEntity {
 	private String id;
 	private String userId;
 	private String title;
-	private int sort;
 	private int dayOfWeek;
 	@Column(columnDefinition = "varchar2(1) default 'Y'")
-	private String useYn;
+	private String useYn = "Y";
+
+	@CreationTimestamp
+	@Column(updatable = false)
+	private LocalDateTime registeredDateTime;
+
+	@CreationTimestamp
+	@Column(updatable = false)
+	private LocalDateTime modifiedDateTime;
 }
