@@ -27,7 +27,7 @@ public class TodoHistoryController {
         return ResponseEntity.ok(ResponseDTO.<TodoHistoryEntity>builder().data(list).build());
     }
 
-    @PostMapping
+    @PutMapping
     public ResponseEntity<?> updateTodoHistory(@RequestBody TodoHistoryEntity entity) {
         try {
             List<TodoHistoryEntity> list = todoHistoryService.update(entity);

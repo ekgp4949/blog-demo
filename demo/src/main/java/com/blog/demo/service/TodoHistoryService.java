@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,7 +36,7 @@ public class TodoHistoryService {
     }
 
     /**
-     * todoHistory done 업데이트 시
+     * todoHistory 업데이트 시
      * @param entity TodoHistory
      * @return TodoHistoryEntity 리스트
      * */
@@ -44,7 +45,9 @@ public class TodoHistoryService {
 
         final Optional<TodoHistoryEntity> original = todoHistoryRepository.findById(entity.getId());
         original.ifPresent(todo -> {
+            todo.setTitle(entity.getTitle());
             todo.setDone(entity.isDone());
+            if(entity.isDone()) todo.setDoneTime(LocalDateTime.now());
             todoHistoryRepository.save(todo);
         });
 
