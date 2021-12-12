@@ -1,4 +1,4 @@
-import { List, ListItem, Typography } from "@mui/material";
+import { List, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 import { call } from "../service/ApiService";
@@ -69,9 +69,9 @@ class DailyTodoList extends React.Component {
             />)
           ) }
         </List>
-        <ListItem>
+        <Box>
           <AddTodo add={this.add} dayOfWeek={this.state.dayOfWeek} />
-        </ListItem>
+        </Box>
       </Box>
     );
   }

@@ -30,7 +30,7 @@ class AddTodo extends React.Component {
 
   render() {
     return (
-      <Grid container spacing={2}>
+      <Grid container spacing={2} width="100%">
         <Grid xs={10} md={11} item>
           <TextField
             placeholder="Add Todo Here" 

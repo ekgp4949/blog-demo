@@ -12,7 +12,7 @@ class ScreenRoutes extends React.Component {
         <Paper
           variant="outlined"
           square
-          sx={{ height: "100%", overflow: "scroll" }}
+          sx={{ height: "100%", overflowY: "scroll" }}
         >
           <Route path="/today">
             <TodoListScreen />
