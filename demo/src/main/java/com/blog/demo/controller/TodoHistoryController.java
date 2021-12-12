@@ -27,6 +27,20 @@ public class TodoHistoryController {
         return ResponseEntity.ok(ResponseDTO.<TodoHistoryEntity>builder().data(list).build());
     }
 
+    @PostMapping
+    public ResponseEntity<?> createTodoHistory(@RequestBody TodoHistoryEntity entity,
+                                               @AuthenticationPrincipal String userId) {
+        try {
+            entity.setId(null);
+            entity.setUserId(userId);
+            entity.setTodoDate(LocalDate.now());
+            List<TodoHistoryEntity> list = todoHistoryService.create(entity);
+            return ResponseEntity.ok(ResponseDTO.<TodoHistoryEntity>builder().data(list).build());
+        } catch(Exception e) {
+            return ResponseEntity.badRequest().body(ResponseDTO.builder().error(e.getMessage()).build());
+        }
+    }
+
     @PutMapping
     public ResponseEntity<?> updateTodoHistory(@RequestBody TodoHistoryEntity entity) {
         try {

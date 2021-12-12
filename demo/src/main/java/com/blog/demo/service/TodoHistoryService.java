@@ -36,6 +36,18 @@ public class TodoHistoryService {
     }
 
     /**
+     * todoHistory 당일자 생성 시
+     * @param item TodoHistory
+     * @return 당일의 TodoHistoryEntity 리스트
+     * */
+    public List<TodoHistoryEntity> create(TodoHistoryEntity item) {
+        TodoHistoryEntity entity = todoHistoryRepository.save(item);
+        return todoHistoryRepository.findByTodoDateAndUserIdOrderByRegisteredDateTimeAsc(
+                entity.getTodoDate(), entity.getUserId()
+        );
+    }
+
+    /**
      * todoHistory 업데이트 시
      * @param entity TodoHistory
      * @return TodoHistoryEntity 리스트
