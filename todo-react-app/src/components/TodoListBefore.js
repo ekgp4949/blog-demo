@@ -5,7 +5,7 @@ import TodoBefore from "./TodoBefore";
 import { call } from "../service/ApiService"
 import Loading from '../Loading'
 
-class TodoList extends React.Component {
+class TodoListBefore extends React.Component {
 
   constructor(props) {
     super(props)
@@ -56,4 +56,4 @@ class TodoList extends React.Component {
   }
 }
 
-export default TodoList;
+export default TodoListBefore;

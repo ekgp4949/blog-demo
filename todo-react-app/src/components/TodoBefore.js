@@ -2,7 +2,7 @@ import React from "react";
 import { ListItem, ListItemText, InputBase, ListItemAvatar, Avatar } from "@mui/material"
 import { Clear, Done } from "@mui/icons-material";
 
-class Todo extends React.Component {
+class TodoBefore extends React.Component {
     constructor(props) {
         super(props);
 
@@ -43,4 +43,4 @@ class Todo extends React.Component {
     }
 }
 
-export default Todo;
+export default TodoBefore;
