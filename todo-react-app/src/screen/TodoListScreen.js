@@ -2,6 +2,7 @@ import { Link } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 import TodoList from "../components/TodoList";
+import TodoListBefore from "../components/TodoListBefore";
 
 function getDate(date) {
   const now = date;
@@ -40,7 +41,7 @@ class TodoListScreen extends React.Component {
       date.setDate(date.getDate()-1);
       loadDate = getDate(date);
       
-      arr.push(<TodoList key={ loadDate } todoDate={ loadDate } />);
+      arr.push(<TodoListBefore key={ loadDate } todoDate={ loadDate } />);
     }
     this.setState({ todoListArr: arr });
   }
