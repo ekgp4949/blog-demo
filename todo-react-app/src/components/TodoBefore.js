@@ -1,6 +1,6 @@
 import React from "react";
-import { ListItem, ListItemText, InputBase, ListItemAvatar, Avatar } from "@mui/material"
-import { Clear, Done } from "@mui/icons-material";
+import { ListItem, ListItemText, InputBase, ListItemIcon } from "@mui/material"
+import { SentimentNeutral, SentimentVerySatisfied } from "@mui/icons-material";
 
 class TodoBefore extends React.Component {
     constructor(props) {
@@ -16,13 +16,11 @@ class TodoBefore extends React.Component {
                 divider
                 dense
             >   
-                <ListItemAvatar>
-                    <Avatar>
-                    {
-                        item.done? <Done /> : <Clear />
-                    }
-                    </Avatar>
-                </ListItemAvatar>
+                <ListItemIcon>
+                {
+                    item.done? <SentimentVerySatisfied sx={{ color: "#c7c7c7" }} /> : <SentimentNeutral />
+                }
+                </ListItemIcon>
                 <ListItemText>
                     <InputBase 
                         inputProps={{ 

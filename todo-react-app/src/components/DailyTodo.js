@@ -1,15 +1,14 @@
 import React from "react";
-import { ListItem, ListItemText, InputBase, Checkbox, ListItemSecondaryAction, IconButton } from "@mui/material"
-import { DeleteOutlined } from "@mui/icons-material";
+import { ListItem, ListItemText, InputBase, ListItemSecondaryAction, IconButton, ListItemIcon } from "@mui/material"
+import { AddTask, DeleteOutlined } from "@mui/icons-material";
 
-class Todo extends React.Component {
+class DailyTodo extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = { item: props.item, readOnly: true };
         this.delete = props.delete;
         this.update = props.update;
-        this.checkItems = props.checkItems;
     }
 
     deleteEventHandler = () => {
@@ -28,7 +27,6 @@ class Todo extends React.Component {
         if(e.key === 'Enter') {
             this.setState({ readOnly: true });
             this.update(this.state.item);
-            this.checkItems();
         }
     };
 
@@ -43,17 +41,18 @@ class Todo extends React.Component {
         thisItem.done = !thisItem.done;
         this.setState({ item: thisItem });
         this.update(this.state.item);
-        this.checkItems();
     };
 
     render() {
         const item = this.state.item;
         return (
-            <ListItem>
-                <Checkbox 
-                    checked={item.done} 
-                    onChange={this.checkBoxEventHandler}
-                />
+            <ListItem
+                divider
+                dense
+            >
+                <ListItemIcon>
+                    <AddTask color="blue" />
+                </ListItemIcon>
                 <ListItemText>
                     <InputBase 
                         inputProps={{ 
@@ -81,4 +80,4 @@ class Todo extends React.Component {
     }
 }
 
-export default Todo;
+export default DailyTodo;
