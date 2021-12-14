@@ -18,7 +18,7 @@ class TodoBefore extends React.Component {
             >   
                 <ListItemIcon>
                 {
-                    item.done? <SentimentVerySatisfied sx={{ color: "#c7c7c7" }} /> : <SentimentNeutral />
+                    item.done? <SentimentVerySatisfied sx={{ color: "#D4AF37" }} /> : <SentimentNeutral />
                 }
                 </ListItemIcon>
                 <ListItemText>
