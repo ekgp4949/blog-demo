@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @Builder
 @Data
 @Entity
-@Table
+@Table(name="CHECK_TODO_CREATION")
 public class CheckTodoCreation {
 
     @Id
