@@ -8,7 +8,7 @@ class Loading extends React.Component {
       <Container maxWidth="xs" style={{ marginTop: "8%" }}>
         <Grid container>
           <Grid item xs={12}>
-            <h2>Loading...</h2>
+            <h4>Loading...</h4>
           </Grid>
           <Grid item xs={12}>
             <h6>잠시 기다려주세요...</h6>
