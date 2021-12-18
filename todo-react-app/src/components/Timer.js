@@ -9,7 +9,7 @@ class Timer extends React.Component {
   constructor(props) {
     super(props);
     
-    this.state = { leftHour : "00", leftMin: "00", leftSec: "00" };
+    this.state = this.getLeftTime();
     
   }
 
