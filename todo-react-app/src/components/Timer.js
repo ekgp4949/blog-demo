@@ -20,11 +20,10 @@ class Timer extends React.Component {
     const minutes = now.getMinutes();
     const seconds = now.getSeconds();
 
-    console.log(hours, minutes, seconds);
     return { 
-      leftHour: padNumber((23 - hours) % 24, 2), 
-      leftMin: padNumber((59 - minutes) % 60, 2), 
-      leftSec: padNumber((60 - seconds) % 60, 2) 
+      leftHour: padNumber(23 - hours, 2), 
+      leftMin: padNumber(59 - minutes, 2), 
+      leftSec: padNumber(59 - seconds, 2) 
     };
 
   };
