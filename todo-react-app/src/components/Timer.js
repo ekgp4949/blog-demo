@@ -10,9 +10,13 @@ class Timer extends React.Component {
     super(props);
     
     this.state = this.getLeftTime();
-    
   }
 
+  refreshTodayPage = () => {
+    if(window.location.pathname === "/today" ) {
+      window.location.reload();
+    }
+  }
 
   getLeftTime = () => {
     const now = new Date();
@@ -29,7 +33,17 @@ class Timer extends React.Component {
   };
   
   componentDidMount() {
-    this.interval = setInterval(() => { this.setState(this.getLeftTime()); }, 1000);
+    this.interval = setInterval(() => {
+      const now = this.getLeftTime();
+      this.setState(now); 
+      
+      const hours = now.leftHour;
+      const minutes = now.leftMin;
+      const seconds = now.leftSec;
+      if(hours === "00" && minutes === "00" && seconds === "00") {
+        this.refreshTodayPage();
+      }
+    }, 1000);
   }
 
   componentWillUnmount() {
