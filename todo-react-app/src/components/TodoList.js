@@ -11,7 +11,7 @@ class TodoList extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = { todoDate: props.todoDate, items: [], loading: true }
+    this.state = { todoDate: props.todoDate, dayOfWeekStr: props.dayOfWeekStr, items: [], loading: true }
   }
 
   componentDidMount() {
@@ -73,7 +73,7 @@ class TodoList extends React.Component {
           >
           <ListItem>
             <Typography variant="header1" sx={{ fontWeight: 400, color: "#1976d2" }}>
-                { this.state.todoDate }
+                { this.state.todoDate+'('+this.state.dayOfWeekStr+')' }
             </Typography>
           </ListItem>
           { this.state.loading ? <Loading /> : content }

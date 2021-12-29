@@ -20,6 +20,8 @@ function getDate(date) {
 
 var loadDate = getDate(new Date());
 
+const dayOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
+
 class TodoListScreen extends React.Component {
   
   constructor(props) {
@@ -29,7 +31,7 @@ class TodoListScreen extends React.Component {
     loadDate = getDate(new Date());
     
     this.state = { todoListArr: [ 
-      <TodoList key={ loadDate } todoDate={ loadDate } /> 
+      <TodoList key={ loadDate } todoDate={ loadDate } dayOfWeekStr={ dayOfWeek[new Date(loadDate).getDay()] }/> 
     ] };
   }
 
@@ -41,7 +43,7 @@ class TodoListScreen extends React.Component {
       date.setDate(date.getDate()-1);
       loadDate = getDate(date);
       
-      arr.push(<TodoListBefore key={ loadDate } todoDate={ loadDate } />);
+      arr.push(<TodoListBefore key={ loadDate } todoDate={ loadDate } dayOfWeekStr={ dayOfWeek[date.getDay()] } />);
     }
     this.setState({ todoListArr: arr });
   }
