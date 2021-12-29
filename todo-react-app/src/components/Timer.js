@@ -12,7 +12,7 @@ class Timer extends React.Component {
     this.state = this.getLeftTime();
   }
 
-  refresh = () => {
+  refreshTodayPage = () => {
     if(window.location.pathname === "/today" ) {
       window.location.reload();
     }
@@ -41,7 +41,7 @@ class Timer extends React.Component {
       const minutes = now.leftMin;
       const seconds = now.leftSec;
       if(hours === "00" && minutes === "00" && seconds === "00") {
-        this.refresh();
+        this.refreshTodayPage();
       }
     }, 1000);
   }
