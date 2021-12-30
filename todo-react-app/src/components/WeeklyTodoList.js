@@ -3,9 +3,9 @@ import { Box } from "@mui/system";
 import React from "react";
 import { call } from "../service/ApiService";
 import AddTodo from "./AddTodo"
-import DailyTodo from "./DailyTodo";
+import WeeklyTodo from "./WeeklyTodo";
 
-class DailyTodoList extends React.Component {
+class WeeklyTodoList extends React.Component {
   constructor(props) {
     super(props);
     this.state = { items:[], loading: false, dayOfWeek: props.dayOfWeek };
@@ -61,7 +61,7 @@ class DailyTodoList extends React.Component {
           dense
         >
           { this.state.items.map(item => 
-            (<DailyTodo 
+            (<WeeklyTodo 
               key={item.id}
               item={item}
               delete={this.delete}
@@ -79,4 +79,4 @@ class DailyTodoList extends React.Component {
 
 }
 
-export default DailyTodoList;
+export default WeeklyTodoList;

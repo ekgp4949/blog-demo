@@ -1,7 +1,7 @@
 import * as React from 'react'
 import TodoListScreen from './TodoListScreen';
-import DailyPlanScreen from './DailyPlanScreen';
-import AboutScreen from './AboutScreen';
+import WeeklyPlanScreen from './WeeklyPlanScreen';
+import SettingsScreen from './SettingsScreen';
 import { Route } from 'react-router';
 import { Paper, Box } from '@mui/material';
 
@@ -17,11 +17,11 @@ class ScreenRoutes extends React.Component {
           <Route path="/today">
             <TodoListScreen />
           </Route>
-          <Route path="/daily">
-            <DailyPlanScreen />
+          <Route path="/weekly">
+            <WeeklyPlanScreen />
           </Route>
-          <Route path="/about">
-            <AboutScreen />
+          <Route path="/settings">
+            <SettingsScreen />
           </Route>
         </Paper>
       </Box>

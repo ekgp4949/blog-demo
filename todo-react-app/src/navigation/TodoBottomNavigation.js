@@ -37,8 +37,8 @@ class TodoBottomNavigation extends React.Component {
               }}
               >
               <BottomNavigationAction to={"/today"} LinkComponent={Link} value={"today"} label="Today's" icon={<DoneOutline />} />
-              <BottomNavigationAction to={"/daily"} LinkComponent={Link} value={"daily"} label="Weekly Plan" icon={<ViewList />} />
-              <BottomNavigationAction to={"/about"} LinkComponent={Link} value={"about"} label="WhoAmI" icon={<HowToReg />} />
+              <BottomNavigationAction to={"/weekly"} LinkComponent={Link} value={"weekly"} label="Weekly Plan" icon={<ViewList />} />
+              <BottomNavigationAction to={"/settings"} LinkComponent={Link} value={"settings"} label="Settings" icon={<HowToReg />} />
             </BottomNavigation>
           </Box>
         </Paper>

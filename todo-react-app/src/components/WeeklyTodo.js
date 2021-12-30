@@ -2,7 +2,7 @@ import React from "react";
 import { ListItem, ListItemText, InputBase, ListItemSecondaryAction, IconButton, ListItemIcon } from "@mui/material"
 import { AddTask, DeleteOutlined } from "@mui/icons-material";
 
-class DailyTodo extends React.Component {
+class WeeklyTodo extends React.Component {
     constructor(props) {
         super(props);
 
@@ -80,4 +80,4 @@ class DailyTodo extends React.Component {
     }
 }
 
-export default DailyTodo;
+export default WeeklyTodo;

@@ -1,11 +1,11 @@
 import React from "react";
 import { Accordion, AccordionDetails, AccordionSummary, Typography } from "@mui/material";
 import { ExpandMore } from "@mui/icons-material";
-import DailyTodoList from "../components/DailyTodoList";
+import WeeklyTodoList from "../components/WeeklyTodoList";
 
 const days = [null, "월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"];
 
-class DailyPlanScreen extends React.Component {
+class WeeklyPlanScreen extends React.Component {
 
   render() {
 
@@ -28,7 +28,7 @@ class DailyPlanScreen extends React.Component {
               <Typography>{ value }</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <DailyTodoList 
+              <WeeklyTodoList 
                 dayOfWeek={index}
               />
             </AccordionDetails>
@@ -39,4 +39,4 @@ class DailyPlanScreen extends React.Component {
   }
 }
 
-export default DailyPlanScreen;
+export default WeeklyPlanScreen;
