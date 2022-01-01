@@ -3,6 +3,7 @@ import { Box } from "@mui/system";
 import React from "react";
 import TodoList from "../components/TodoList";
 import TodoListBefore from "../components/TodoListBefore";
+import { call } from "../service/ApiService"
 
 function getDate(date) {
   const now = date;
@@ -24,17 +25,17 @@ const dayOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
 
 class TodoListScreen extends React.Component {
   
-  constructor(props) {
-    super(props);
-    
-    // loadDate init
-    loadDate = getDate(new Date());
-    
-    this.state = { todoListArr: [ 
-      <TodoList key={ loadDate } todoDate={ loadDate } dayOfWeekStr={ dayOfWeek[new Date(loadDate).getDay()] }/> 
-    ] };
+  componentDidMount() {
+    call("/stamps", "GET", null).then((response) => {
+      const loadDate = getDate(new Date());
+      this.setState({ todoListArr: [ 
+          <TodoList key={ loadDate } todoDate={ loadDate } dayOfWeekStr={ dayOfWeek[new Date(loadDate).getDay()] }/> 
+        ], stamps: { goodStampSrc: response.goodStampSrc, badStampSrc: response.badStampSrc } 
+      });
+    }).catch((error) => {
+      console.log(error.error)
+    });
   }
-
 
   loadTodoListCallback = (e) => {
     let arr = this.state.todoListArr;
@@ -43,7 +44,14 @@ class TodoListScreen extends React.Component {
       date.setDate(date.getDate()-1);
       loadDate = getDate(date);
       
-      arr.push(<TodoListBefore key={ loadDate } todoDate={ loadDate } dayOfWeekStr={ dayOfWeek[date.getDay()] } />);
+      arr.push(
+        <TodoListBefore 
+          key={ loadDate } 
+          todoDate={ loadDate } 
+          dayOfWeekStr={ dayOfWeek[date.getDay()] } 
+          stamps={ this.state.stamps }  
+        />
+      );
     }
     this.setState({ todoListArr: arr });
   }

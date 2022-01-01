@@ -10,7 +10,7 @@ class TodoListBefore extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = { todoDate: props.todoDate, dayOfWeekStr: props.dayOfWeekStr, items: [], loading: true }
+    this.state = { todoDate: props.todoDate, dayOfWeekStr: props.dayOfWeekStr, items: [], loading: true, stamps: props.stamps }
   }
 
   componentDidMount() {
@@ -35,6 +35,7 @@ class TodoListBefore extends React.Component {
         (<TodoBefore
           key={item.id}
           item={item}
+          stamps={ this.state.stamps }
         />)
       ) );
     }
