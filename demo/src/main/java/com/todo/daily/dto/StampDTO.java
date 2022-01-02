@@ -19,7 +19,7 @@ public class StampDTO {
 	public StampDTO(final StampEntity entity) {
 		this.id = entity.getId();
 		this.goodStampSrc = entity.getGoodStampSrc();
-		this.goodStampSrc = entity.getBadStampSrc();
+		this.badStampSrc = entity.getBadStampSrc();
 	}
 	
 	public static StampEntity toEntity(final StampDTO dto) {

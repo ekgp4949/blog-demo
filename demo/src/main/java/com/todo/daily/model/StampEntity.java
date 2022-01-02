@@ -1,5 +1,6 @@
 package com.todo.daily.model;
 
+import com.todo.daily.dto.StampDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -36,4 +37,12 @@ public class StampEntity {
 	@CreationTimestamp
 	@Column(updatable = false)
 	private LocalDateTime modifiedDateTime;
+
+	public static StampDTO toDTO(final StampEntity entity) {
+		return StampDTO.builder()
+				.id(entity.getId())
+				.goodStampSrc(entity.getGoodStampSrc())
+				.badStampSrc(entity.getBadStampSrc())
+				.build();
+	}
 }
