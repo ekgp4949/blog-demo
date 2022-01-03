@@ -19,18 +19,30 @@ function getDate(date) {
   return year + "-" + month + "-" + day;
 }
 
-var loadDate = getDate(new Date());
-
 const dayOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
 
 class TodoListScreen extends React.Component {
   
+  constructor(props) {
+    super(props);
+    
+    const loadDate = getDate(new Date());
+
+    this.state = { 
+      todoListArr: [ 
+        <TodoList key={ loadDate } todoDate={ loadDate } dayOfWeekStr={ dayOfWeek[new Date(loadDate).getDay()] }/> 
+      ], 
+      stamps: { goodStampSrc: null, badStampSrc: null },
+      loadedDate: new Date() 
+    };
+  }
+
   componentDidMount() {
     call("/stamps", "GET", null).then((response) => {
-      const loadDate = getDate(new Date());
-      this.setState({ todoListArr: [ 
-          <TodoList key={ loadDate } todoDate={ loadDate } dayOfWeekStr={ dayOfWeek[new Date(loadDate).getDay()] }/> 
-        ], stamps: { goodStampSrc: response.goodStampSrc, badStampSrc: response.badStampSrc } 
+      this.setState({ 
+        todoListArr: this.state.todoListArr, 
+        stamps: { goodStampSrc: response.goodStampSrc, badStampSrc: response.badStampSrc },
+        loadedDate: this.state.loadedDate 
       });
     }).catch((error) => {
       console.log(error.error)
@@ -39,21 +51,23 @@ class TodoListScreen extends React.Component {
 
   loadTodoListCallback = (e) => {
     let arr = this.state.todoListArr;
-    for(let i = 0; i < 7; i++) {
-      let date = new Date(loadDate);
+    const loadedDate = getDate(this.state.loadedDate);
+    let date = new Date(loadedDate);
+    for(let i = 1; i <= 7; i++) {
       date.setDate(date.getDate()-1);
-      loadDate = getDate(date);
       
+      const dateStr = getDate(date);
+
       arr.push(
         <TodoListBefore 
-          key={ loadDate } 
-          todoDate={ loadDate } 
+          key={ dateStr } 
+          todoDate={ dateStr } 
           dayOfWeekStr={ dayOfWeek[date.getDay()] } 
           stamps={ this.state.stamps }  
         />
       );
     }
-    this.setState({ todoListArr: arr });
+    this.setState({ todoListArr: arr, loadedDate: date });
   }
   
   render() {
