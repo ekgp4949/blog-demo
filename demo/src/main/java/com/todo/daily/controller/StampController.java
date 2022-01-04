@@ -23,7 +23,7 @@ public class StampController {
     }
 
     @PostMapping("/good")
-    public ResponseEntity<?> saveGoodStamp(@RequestBody MultipartFile imgFile, @AuthenticationPrincipal String userId) {
+    public ResponseEntity<?> saveGoodStamp(@RequestPart MultipartFile imgFile, @AuthenticationPrincipal String userId) {
         try {
             return ResponseEntity.ok(StampEntity.toDTO(service.updateGoodStamp(imgFile, userId)));
         } catch (Exception e) {
@@ -32,7 +32,7 @@ public class StampController {
     }
 
     @PostMapping("/bad")
-    public ResponseEntity<?> saveBadStamp(@RequestBody MultipartFile imgFile, @AuthenticationPrincipal String userId) {
+    public ResponseEntity<?> saveBadStamp(@RequestPart MultipartFile imgFile, @AuthenticationPrincipal String userId) {
         try{
             return ResponseEntity.ok(StampEntity.toDTO(service.updateBadStamp(imgFile, userId)));
         } catch (Exception e) {
