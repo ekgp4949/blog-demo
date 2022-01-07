@@ -3,6 +3,7 @@ import { Typography, Box, Stack, Avatar, Paper } from "@mui/material";
 import React from "react";
 import Loading from "../Loading";
 import { call } from "../service/ApiService";
+import StampModal from "../components/StampModal"
 
 class SettingsScreen extends React.Component {
 
@@ -56,6 +57,7 @@ class SettingsScreen extends React.Component {
               <Typography variant="caption">더 노력해요</Typography>
             </Paper>
           </Stack>
+          <StampModal />
         </Box>
       );
     }
