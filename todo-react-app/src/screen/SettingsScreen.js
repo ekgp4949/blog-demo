@@ -10,24 +10,34 @@ class SettingsScreen extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = ({ stamps: { goodStampSrc: null, badStampSrc: null }, loading: true });
+    this.state = ({ stamps: { goodStampSrc: null, badStampSrc: null }, loading: true, modalOpen: false });
   }
 
   componentDidMount() {
     call("/stamps", "GET", null).then((response) => {
       console.log(response)
-      this.setState({ stamps: { goodStampSrc: response.goodStampSrc, badStampSrc: response.badStampSrc }, loading: false });
+      this.setState(
+        { stamps: { goodStampSrc: response.goodStampSrc, badStampSrc: response.badStampSrc }, loading: false }
+      );
     }).catch((error) => {
       console.log(error.error)
     });
   }
 
+  showStampModal = () => {
+    return this.state.modalOpen ? <StampModal open={ this.state.modalOpen } handleClose={ this.handleClose }/> : null;
+  }
+
   changeGoodStampImg = () => {
-    alert("hi1")
+    this.setState({ modalOpen: true });
   }
 
   changeBadStampImg = () => {
-    alert("hi2")
+    this.setState({ modalOpen: true });
+  }
+
+  handleClose = () => {
+    this.setState({ modalOpen: false })
   }
 
   render() {
@@ -57,7 +67,7 @@ class SettingsScreen extends React.Component {
               <Typography variant="caption">더 노력해요</Typography>
             </Paper>
           </Stack>
-          <StampModal />
+          { this.showStampModal() }
         </Box>
       );
     }
