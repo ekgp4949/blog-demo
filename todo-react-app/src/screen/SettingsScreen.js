@@ -25,15 +25,17 @@ class SettingsScreen extends React.Component {
   }
 
   showStampModal = () => {
-    return this.state.modalOpen ? <StampModal open={ this.state.modalOpen } handleClose={ this.handleClose }/> : null;
+    return this.state.modalOpen ? 
+      <StampModal open={ this.state.modalOpen } handleClose={ this.handleClose } type={ this.state.stampType } 
+        stampSrc={ this.state.stampSrc }/> : null;
   }
 
   changeGoodStampImg = () => {
-    this.setState({ modalOpen: true });
+    this.setState({ modalOpen: true, stampType: "good", stampSrc: this.state.badStampSrc });
   }
 
   changeBadStampImg = () => {
-    this.setState({ modalOpen: true });
+    this.setState({ modalOpen: true, stampType: "bad", stampSrc: this.state.badStampSrc });
   }
 
   handleClose = () => {
