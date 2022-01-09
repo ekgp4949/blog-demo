@@ -1,7 +1,6 @@
 package com.todo.daily.controller;
 
 import com.todo.daily.dto.ResponseDTO;
-import com.todo.daily.dto.StampDTO;
 import com.todo.daily.model.StampEntity;
 import com.todo.daily.service.StampService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,8 @@ public class StampController {
     }
 
     @PostMapping("/good")
-    public ResponseEntity<?> saveGoodStamp(@RequestPart MultipartFile imgFile, @AuthenticationPrincipal String userId) {
+    public ResponseEntity<?> saveGoodStamp(
+            @RequestPart(value = "uploadImage") MultipartFile imgFile, @AuthenticationPrincipal String userId) {
         try {
             return ResponseEntity.ok(StampEntity.toDTO(service.updateGoodStamp(imgFile, userId)));
         } catch (Exception e) {
@@ -32,7 +32,8 @@ public class StampController {
     }
 
     @PostMapping("/bad")
-    public ResponseEntity<?> saveBadStamp(@RequestPart MultipartFile imgFile, @AuthenticationPrincipal String userId) {
+    public ResponseEntity<?> saveBadStamp(
+            @RequestPart(value = "uploadImage") MultipartFile imgFile, @AuthenticationPrincipal String userId) {
         try{
             return ResponseEntity.ok(StampEntity.toDTO(service.updateBadStamp(imgFile, userId)));
         } catch (Exception e) {

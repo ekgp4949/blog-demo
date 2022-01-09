@@ -61,25 +61,24 @@ public class StampService {
             );
         String originalFileName = imgFile.getOriginalFilename();
 
-        String uploadedUrl = "";
+        String savedFileName = "";
 
         if(originalFileName == null) {
             throw new RuntimeException("FileName cannot be null");
         }
 
-        if(originalFileName.isEmpty()) {
-            try {
-                uploadedUrl = fileUploadService.uploadFile(recentStamp.getId(), stampImgLocation,
-                        originalFileName, imgFile.getBytes());
-            } catch(IOException e) {
-                log.error("img upload error, userId: ", userId, e);
-            }
+        String uuid = recentStamp.getId();
+        try {
+            savedFileName = fileUploadService.uploadFile(uuid, stampImgLocation,
+                    originalFileName, imgFile.getBytes(), type);
+        } catch(IOException e) {
+            log.error("img upload error, userId: ", userId, e);
         }
 
         if(type.equals("good")) {
-            recentStamp.setGoodStampSrc(uploadedUrl);
+            recentStamp.setGoodStamp(savedFileName);
         } else if(type.equals("bad")) {
-            recentStamp.setBadStampSrc(uploadedUrl);
+            recentStamp.setBadStamp(savedFileName);
         }
 
         return repository.save(recentStamp);

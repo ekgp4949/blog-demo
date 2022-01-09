@@ -27,8 +27,8 @@ public class StampEntity {
 	@GenericGenerator(name = "system-uuid", strategy = "uuid")
 	private String id;
 	private String userId;
-	private String goodStampSrc;
-	private String badStampSrc;
+	private String goodStamp;
+	private String badStamp;
 
 	@CreationTimestamp
 	@Column(updatable = false)
@@ -41,8 +41,8 @@ public class StampEntity {
 	public static StampDTO toDTO(final StampEntity entity) {
 		return StampDTO.builder()
 				.id(entity.getId())
-				.goodStampSrc(entity.getGoodStampSrc())
-				.badStampSrc(entity.getBadStampSrc())
+				.goodStamp(entity.getGoodStamp())
+				.badStamp(entity.getBadStamp())
 				.build();
 	}
 }
