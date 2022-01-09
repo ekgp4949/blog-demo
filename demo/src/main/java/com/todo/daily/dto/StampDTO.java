@@ -13,20 +13,20 @@ import lombok.NoArgsConstructor;
 @Data
 public class StampDTO {
 	private String id;
-	private String goodStampSrc;
-	private String badStampSrc;
+	private String goodStamp;
+	private String badStamp;
 
 	public StampDTO(final StampEntity entity) {
 		this.id = entity.getId();
-		this.goodStampSrc = entity.getGoodStampSrc();
-		this.badStampSrc = entity.getBadStampSrc();
+		this.goodStamp = entity.getGoodStamp();
+		this.badStamp = entity.getBadStamp();
 	}
 	
 	public static StampEntity toEntity(final StampDTO dto) {
 		return StampEntity.builder()
 			.id(dto.getId())
-			.goodStampSrc(dto.getGoodStampSrc())
-			.badStampSrc(dto.getBadStampSrc())
+			.goodStamp(dto.getGoodStamp())
+			.badStamp(dto.getBadStamp())
 			.build();
 	}
 }
