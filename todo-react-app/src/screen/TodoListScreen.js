@@ -1,6 +1,7 @@
 import { Link } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
+import { API_STAMP_IMG_URL } from "../app-config";
 import TodoList from "../components/TodoList";
 import TodoListBefore from "../components/TodoListBefore";
 import { call } from "../service/ApiService"
@@ -41,7 +42,7 @@ class TodoListScreen extends React.Component {
     call("/stamps", "GET", null).then((response) => {
       this.setState({ 
         todoListArr: this.state.todoListArr, 
-        stamps: { goodStampSrc: response.goodStampSrc, badStampSrc: response.badStampSrc },
+        stamps: { goodStampSrc: API_STAMP_IMG_URL + response.goodStamp, badStampSrc: API_STAMP_IMG_URL + response.badStamp },
         loadedDate: this.state.loadedDate 
       });
     }).catch((error) => {
