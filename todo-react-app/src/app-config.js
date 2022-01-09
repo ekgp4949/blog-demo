@@ -7,3 +7,5 @@ if(hostname === "localhost") {
 }
 
 export const API_BASE_URL = `${backendHost}`;
+
+export const API_STAMP_IMG_URL = `${backendHost}/image/stamp/`;

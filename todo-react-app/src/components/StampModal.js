@@ -4,34 +4,40 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { Avatar, Button, Grid } from '@mui/material';
 import { Save, SentimentNeutral, SentimentVerySatisfied } from '@mui/icons-material';
+import { callForUpload } from '../service/ApiService';
 
 class StampModal extends React.Component{
   constructor(props) {
     super(props);
-    this.state = { open: props.open, stampSrc: props.stampSrc, stampType: props.type, uploadedImg: null }
+    this.state = { open: props.open, stamp: props.stamp, stampSrc: props.stampSrc, stampType: props.type, uploadedImg: null }
     this.close = props.handleClose;
-    console.log(this.state)
   }
 
   handleClose = () => {
     this.close();
     this.setState({ open: false });
+    window.location.reload();
   };
 
   uploadImg = (e) => {
     const uploadedImg = e.target.files[0];
-    this.setImgFile(uploadedImg)
-    this.setState({ uploadedImg: uploadedImg });
+    if(!uploadedImg) return;
 
     const reader = new FileReader();
     reader.onload = () => {
-      this.setState({ stampSrc: reader.result });
+      this.setState({ stampSrc: reader.result, uploadedImg: uploadedImg, stamp: "temp" });
     };
+
     reader.readAsDataURL(uploadedImg);
   };
 
   updateStamp = () => {
+    callForUpload("/stamps/"+this.state.stampType, this.state.uploadedImg)
+    .then((response) => {
 
+    }).catch((error) => {
+      alert("에러가 발생했습니다.")
+    });
   };
 
   render() {
@@ -49,11 +55,11 @@ class StampModal extends React.Component{
 
     let stamp;
     if(this.state.stampType === "good") {
-      stamp = this.state.stampSrc ? 
+      stamp = this.state.stamp ? 
         <Avatar sx={{ bgcolor: "green" }} alt="Good Stamp" src={ this.state.stampSrc } />
         : <SentimentVerySatisfied sx={{ color: "green" }} />;
     } else {
-      stamp = this.state.stampSrc ? 
+      stamp = this.state.stamp ? 
         <Avatar sx={{ bgcolor: "red" }} alt="Bad Stamp" src={ this.state.stampSrc  } />
         : <SentimentNeutral sx={{ color: "red" }} />;
     }

@@ -62,3 +62,49 @@ export function signout() {
 export function signup(userDTO) {
   return call("/auth/signup", "POST", userDTO);
 }
+
+export function callForUpload(api, file) {
+
+  if(!file) {
+    alert("이미지를 업로드해주세요.")
+    return;
+  }
+
+  let headers = new Headers({
+  }); 
+
+  const accessToken = localStorage.getItem("ACCESS_TOKEN");
+  if(accessToken && accessToken !== null) {
+    headers.append("Authorization", "Bearer "+accessToken);
+  }
+
+  let formData = new FormData();
+  formData.append("uploadImage", file, file.name);
+
+  const options = {
+    headers: headers,
+    url: API_BASE_URL + api,
+    method: "POST",
+    body: formData
+  };
+
+  console.log(options)
+
+  return fetch(options.url, options)
+    .then((response) =>
+      response.json().then((json) => {
+        if(!response.ok) {
+          return Promise.reject(json);
+        }
+        return json;
+      })
+    )
+    .catch((error) => {
+      console.log(error)
+      if(error.status === 403) {
+        window.location.href = "/login"; // redirect
+      }
+      return Promise.reject(error);
+    });
+
+}
