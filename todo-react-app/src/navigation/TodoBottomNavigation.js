@@ -21,6 +21,13 @@ class TodoBottomNavigation extends React.Component {
     this.state = { value: path };
   }
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if(nextProps.value !== prevState.value) { // 조건에 따라 특정 값 동기화
+      return { value: nextProps.value };
+    }
+    return null;
+  }
+
   render() {
     return (
       <Box>
@@ -32,9 +39,6 @@ class TodoBottomNavigation extends React.Component {
             <BottomNavigation
               showLabels
               value={this.state.value}
-              onChange={(event, newValue) => {
-                this.setState({ value: newValue });
-              }}
               >
               <BottomNavigationAction to={"/today"} LinkComponent={Link} value={"today"} label="Today's" icon={<DoneOutline />} />
               <BottomNavigationAction to={"/weekly"} LinkComponent={Link} value={"weekly"} label="Weekly Plan" icon={<ViewList />} />

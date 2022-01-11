@@ -44,7 +44,7 @@ export function signin(userDTO) {
     .then((response) => {
       if(response.token) {
         localStorage.setItem("ACCESS_TOKEN", response.token);
-        window.location.href = "/";
+        window.location.href = "/today";
       }
     })
     .catch((error) => {
@@ -66,8 +66,8 @@ export function signup(userDTO) {
 export function callForUpload(api, file) {
 
   if(!file) {
-    alert("이미지를 업로드해주세요.")
-    return;
+    const msg = "이미지를 업로드해주세요.";
+    return Promise.reject(msg);
   }
 
   let headers = new Headers({
@@ -87,8 +87,6 @@ export function callForUpload(api, file) {
     method: "POST",
     body: formData
   };
-
-  console.log(options)
 
   return fetch(options.url, options)
     .then((response) =>

@@ -6,6 +6,12 @@ import WeeklyTodoList from "../components/WeeklyTodoList";
 const days = [null, "월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"];
 
 class WeeklyPlanScreen extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.changeNavigationValue = props.changeNavigationValue;
+    this.changeNavigationValue("weekly");
+  }
 
   render() {
 

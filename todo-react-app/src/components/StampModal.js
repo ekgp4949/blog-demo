@@ -2,7 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { Avatar, Button, Grid } from '@mui/material';
+import { Alert, Avatar, Button, Grid, Snackbar } from '@mui/material';
 import { Save, SentimentNeutral, SentimentVerySatisfied } from '@mui/icons-material';
 import { callForUpload } from '../service/ApiService';
 
@@ -33,12 +33,20 @@ class StampModal extends React.Component{
 
   updateStamp = () => {
     callForUpload("/stamps/"+this.state.stampType, this.state.uploadedImg)
-    .then((response) => {
-
+    .then(() => {
+      this.handleAlertOpen();
     }).catch((error) => {
-      alert("에러가 발생했습니다.")
+      alert(error)
     });
   };
+
+  handleAlertOpen = () => {
+    this.setState({ alertOpen: true });
+  }
+
+  handleAlertClose = () => {
+    this.setState({ alertOpen: false });
+  }
 
   render() {
     const style = {
@@ -109,6 +117,15 @@ class StampModal extends React.Component{
             </Box>
           </Box>
         </Modal>
+        <Snackbar
+          severity="success"
+          open={this.state.alertOpen}
+          onClose={this.handleAlertClose}
+        >
+          <Alert onClose={this.handleAlertClose} severity="success" sx={{ width: '100%' }}>
+            저장했습니다.
+          </Alert>
+        </Snackbar>
       </div>
     );
   }

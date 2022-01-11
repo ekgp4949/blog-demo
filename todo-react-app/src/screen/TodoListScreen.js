@@ -29,6 +29,9 @@ class TodoListScreen extends React.Component {
     
     const loadDate = getDate(new Date());
 
+    this.changeNavigationValue = props.changeNavigationValue;
+    this.changeNavigationValue("today");
+
     this.state = { 
       todoListArr: [ 
         <TodoList key={ loadDate } todoDate={ loadDate } dayOfWeekStr={ dayOfWeek[new Date(loadDate).getDay()] }/> 

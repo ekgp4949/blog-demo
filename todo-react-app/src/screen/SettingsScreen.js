@@ -10,6 +10,9 @@ class SettingsScreen extends React.Component {
 
   constructor(props) {
     super(props);
+    
+    this.changeNavigationValue = props.changeNavigationValue;
+    this.changeNavigationValue("settings");
 
     this.state = ({ stamps: { goodStampSrc: null, badStampSrc: null, goodStamp: null, badStamp: null }, loading: true, 
       modalOpen: false, stampSrc: null, stampType: null, stamp: null });

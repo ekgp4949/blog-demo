@@ -6,6 +6,11 @@ import { Route } from 'react-router';
 import { Paper, Box } from '@mui/material';
 
 class ScreenRoutes extends React.Component {
+  constructor(props) {
+    super(props);
+    this.changeNavigationValue = props.changeNavigationValue;
+  }
+
   render() {
     return (
       <Box height="80%">
@@ -15,13 +20,13 @@ class ScreenRoutes extends React.Component {
           sx={{ height: "100%", overflowY: "scroll" }}
         >
           <Route path="/today">
-            <TodoListScreen />
+            <TodoListScreen changeNavigationValue={this.changeNavigationValue}/>
           </Route>
           <Route path="/weekly">
-            <WeeklyPlanScreen />
+            <WeeklyPlanScreen changeNavigationValue={this.changeNavigationValue}/>
           </Route>
           <Route path="/settings">
-            <SettingsScreen />
+            <SettingsScreen changeNavigationValue={this.changeNavigationValue}/>
           </Route>
         </Paper>
       </Box>

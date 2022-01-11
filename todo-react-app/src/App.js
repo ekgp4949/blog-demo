@@ -7,14 +7,22 @@ import { Box } from '@mui/system';
 
 
 class App extends React.Component {
-  
-  render() {
+  constructor(props) {
+    super(props);
+    this.state = { navValue: "today" }
+  }
 
+
+  changeNavigationValue = (value) => {
+    this.setState({ navValue: value });
+  }
+
+  render() {
     return (
       <Box className="App" height="100%">
         <NavigationBar />
-        <ScreenRoutes />
-        <TodoBottomNavigation />
+        <ScreenRoutes changeNavigationValue={this.changeNavigationValue}/>
+        <TodoBottomNavigation value={this.state.navValue} />
       </Box>
     );
   };
