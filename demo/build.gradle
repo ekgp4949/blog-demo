@@ -33,6 +33,7 @@ dependencies {
 	implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
 
 	testImplementation 'org.springframework.security:spring-security-test'
+	runtimeOnly 'mysql:mysql-connector-java'
 }
 
 test {
