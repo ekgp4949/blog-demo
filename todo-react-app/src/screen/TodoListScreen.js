@@ -43,9 +43,11 @@ class TodoListScreen extends React.Component {
 
   componentDidMount() {
     call("/stamps", "GET", null).then((response) => {
+      const goodStampSrc = response.goodStamp ? API_STAMP_IMG_URL + response.goodStamp : null;
+      const badStampSrc = response.badStamp ? API_STAMP_IMG_URL + response.badStamp : null;
       this.setState({ 
         todoListArr: this.state.todoListArr, 
-        stamps: { goodStampSrc: API_STAMP_IMG_URL + response.goodStamp, badStampSrc: API_STAMP_IMG_URL + response.badStamp },
+        stamps: { goodStampSrc: goodStampSrc, badStampSrc: badStampSrc },
         loadedDate: this.state.loadedDate 
       });
     }).catch((error) => {
