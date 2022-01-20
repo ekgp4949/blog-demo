@@ -1,8 +1,8 @@
 import { API_BASE_URL } from "../app-config";
 
 export function call(api, method, request) {
-  let headers = new Headers({
-    "Content-Type": "application/json"
+  const headers = new Headers({
+    "Content-Type": "application/json",
   }); 
 
   const accessToken = localStorage.getItem("ACCESS_TOKEN");
@@ -21,13 +21,14 @@ export function call(api, method, request) {
   };
 
   return fetch(options.url, options)
-    .then((response) =>
-      response.json().then((json) => {
-        if(!response.ok) {
-          return Promise.reject(json);
-        }
-        return json;
-      })
+    .then((response) => {
+        return response.json().then((json) => {
+          if(!response.ok) {
+            return Promise.reject(json);
+          }
+          return json;
+        })
+      }
     )
     .catch((error) => {
       console.log(error)

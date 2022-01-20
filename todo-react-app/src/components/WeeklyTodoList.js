@@ -39,7 +39,7 @@ class WeeklyTodoList extends React.Component {
     call("/todo/"+this.state.dayOfWeek, "GET", null).then((response) => {
       this.setState({ items: response.data, loading: false })
     }, (error) => {
-      console.log(error.error)
+      console.log(error)
     });
   };
 
