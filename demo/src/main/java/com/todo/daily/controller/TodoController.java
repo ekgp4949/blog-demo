@@ -1,20 +1,19 @@
 package com.todo.daily.controller;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
+import com.todo.daily.dto.ResponseDTO;
+import com.todo.daily.dto.TodoDTO;
+import com.todo.daily.model.TodoEntity;
+import com.todo.daily.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import com.todo.daily.dto.ResponseDTO;
-import com.todo.daily.dto.TodoDTO;
-import com.todo.daily.model.TodoEntity;
-import com.todo.daily.service.TodoService;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("todo")
+@RequestMapping("/todo")
 public class TodoController {
 	
 	@Autowired
@@ -28,6 +27,7 @@ public class TodoController {
 			entity.setId(null);
 			
 			entity.setUserId(userId);
+			entity.setUseYn("Y");
 			
 			List<TodoEntity> entities = todoService.create(entity);
 			
@@ -42,12 +42,15 @@ public class TodoController {
 		}
 	}
 
-	@GetMapping(value = "/{dayOfWeek}")
+	@GetMapping("/{dayOfWeek}")
 	public ResponseEntity<?> retrieveTodoList(@PathVariable int dayOfWeek, @AuthenticationPrincipal String userId) {
-		List<TodoEntity> entities = todoService.retrieve(dayOfWeek, userId);
-		List<TodoDTO> dtos = entities.stream().map(TodoDTO::new).collect(Collectors.toList());
-		ResponseDTO<TodoDTO> responseDTO = ResponseDTO.<TodoDTO>builder().data(dtos).build();
-		return ResponseEntity.ok().body(responseDTO);
+		try {
+			List<TodoEntity> entities = todoService.retrieve(dayOfWeek, userId);
+			List<TodoDTO> dtos = entities.stream().map(TodoDTO::new).collect(Collectors.toList());
+			return ResponseEntity.ok(ResponseDTO.<TodoDTO>builder().data(dtos).build());
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
 	}
 
 	@GetMapping

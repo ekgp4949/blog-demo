@@ -1,6 +1,10 @@
 package com.todo.daily.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
@@ -21,7 +25,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name="TODO")
+@Table(name="todo")
 public class TodoEntity {
 	@Id
 	@GeneratedValue(generator = "system-uuid")
@@ -31,7 +35,7 @@ public class TodoEntity {
 	private String title;
 	private int dayOfWeek;
 	@Column(columnDefinition = "varchar2(1) default 'Y'")
-	private String useYn = "Y";
+	private String useYn;
 
 	@CreationTimestamp
 	@Column(updatable = false)
