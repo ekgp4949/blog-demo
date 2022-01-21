@@ -1,48 +1,64 @@
-//package com.todo.daily.service;
-//
-//import com.todo.daily.model.TodoEntity;
-//import com.todo.daily.persistence.TodoRepository;
-//import org.junit.jupiter.api.*;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.test.context.SpringBootTest;
-//import org.springframework.security.test.context.support.WithMockUser;
-//
-//import java.util.List;
-//
-//@SpringBootTest
-//@WithMockUser
-//public class TodoServiceTest {
-//    @Autowired
-//    TodoService service;
-//
-//    @Autowired
-//    TodoRepository repository;
-//
-//    @Test
-//    @DisplayName("retrieve 오버로딩 메서드 테스트")
-//    public void retrieveTest() {
-//        List<TodoEntity> list1 = service.retrieve("user");
-//        List<TodoEntity> list2 = service.retrieve(1, "user");
-//
-//        Assertions.assertEquals(10, list1.size());
-//        Assertions.assertEquals(1, list2.size());
-//    }
-//
-//    @BeforeEach
-//    void setUp() {
-//        for(int i = 1; i <= 10; i++) {
-//            TodoEntity entity = TodoEntity.builder()
-//                    .title("title"+i)
-//                    .userId("user")
-//                    .dayOfWeek(i)
-//                    //.useYn("Y")
-//                    .build();
-//            repository.save(entity);
-//        }
-//    }
-//
-//    @AfterEach
-//    void tearDown() {
-//        repository.deleteAll();
-//    }
-//}
+package com.todo.daily.service;
+
+import com.todo.daily.model.TodoEntity;
+import com.todo.daily.persistence.CheckTodoCreationRepository;
+import com.todo.daily.persistence.TodoHistoryRepository;
+import com.todo.daily.persistence.TodoRepository;
+import org.junit.jupiter.api.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
+
+import java.time.LocalDate;
+
+@SpringBootTest
+@WithMockUser
+public class TodoServiceTest {
+    @Autowired
+    TodoService todoService;
+
+    @Autowired
+    TodoRepository todoRepository;
+
+    @Autowired
+    CheckTodoCreationRepository checkTodoCreationRepository;
+
+    @Autowired
+    TodoHistoryService todoHistoryService;
+
+    @Autowired
+    TodoHistoryRepository todoHistoryRepository;
+
+    @Test
+    @DisplayName("CheckCreation, Scheduler, 내일자 Todo delete시 내일자 TodoHistory delete 테스트")
+    public void createTest() {
+        LocalDate tomorrow = LocalDate.now().plusDays(1);
+        int dayOfWeek = tomorrow.getDayOfWeek().getValue();
+
+        String userId = "user";
+        TodoEntity entity = TodoEntity.builder()
+                .title("doSomething")
+                .userId(userId)
+                .dayOfWeek(dayOfWeek)
+                .build();
+        TodoEntity savedEntity =  todoRepository.save(entity);
+
+        todoHistoryService.scheduledCreate();
+
+        Assertions.assertNotNull(checkTodoCreationRepository.findById(tomorrow).orElseGet(null));
+        Assertions.assertEquals(1, todoHistoryRepository.findAll().size());
+        Assertions.assertDoesNotThrow(() -> todoService.delete(savedEntity, userId));
+        Assertions.assertEquals(0, todoHistoryRepository.findAll().size());
+        Assertions.assertDoesNotThrow(() -> todoService.delete(savedEntity, userId));
+    }
+
+    @BeforeEach
+    void setUp() {
+
+    }
+
+    @AfterEach
+    void tearDown() {
+        todoRepository.deleteAll();
+    }
+}

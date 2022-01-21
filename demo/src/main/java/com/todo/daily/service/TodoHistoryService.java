@@ -35,26 +35,30 @@ public class TodoHistoryService {
     }
 
     /**
-     * todoHistory 당일자 생성 시
+     * todoHistory 내일자 생성 시
      * */
-    @Scheduled(cron = "3 0 0 * * *")
+    @Scheduled(cron = "0 0 0/1 * * *")
     @Transactional
     public void scheduledCreate() {
-        LocalDate now = LocalDate.now();
-        List<TodoHistoryEntity> items = todoRepository.findByDayOfWeekAndUseYn(now.getDayOfWeek().getValue(), "Y")
-                .stream().map(todo ->
+        LocalDate tomorrow = LocalDate.now().plusDays(1);
+        if(!checkTodoCreationRepository.findByTodoDate(tomorrow).isPresent()) {
+            List<TodoHistoryEntity> items = todoRepository
+                .findByDayOfWeekAndUseYn(tomorrow.getDayOfWeek().getValue(), "Y")
+                .stream()
+                .map(todo ->
                     TodoHistoryEntity.builder()
-                        .todoDate(now)
+                        .todoDate(tomorrow)
                         .title(todo.getTitle())
                         .userId(todo.getUserId())
                         .parentTodoId(todo.getId())
                         .done(false)
                         .build()
                 ).collect(Collectors.toList());
-        checkTodoCreationRepository.save(CheckTodoCreation.builder()
-                .creationDate(now)
-                .build());
-        todoHistoryRepository.saveAll(items);
+            checkTodoCreationRepository.save(CheckTodoCreation.builder()
+                    .todoDate(tomorrow)
+                    .build());
+            todoHistoryRepository.saveAll(items);
+        }
     }
 
     /**
@@ -63,6 +67,8 @@ public class TodoHistoryService {
      * @return 당일의 TodoHistoryEntity 리스트
      * */
     public List<TodoHistoryEntity> create(TodoHistoryEntity item) {
+        validate(item);
+
         TodoHistoryEntity entity = todoHistoryRepository.save(item);
         return todoHistoryRepository.findByTodoDateAndUserIdOrderByRegisteredDateTimeAsc(
                 entity.getTodoDate(), entity.getUserId()
@@ -94,7 +100,7 @@ public class TodoHistoryService {
      * @return TodoHistoryEntity 리스트
      * */
     public List<TodoHistoryEntity> delete(final TodoHistoryEntity entity) {
-
+        validate(entity);
         todoHistoryRepository.delete(entity);
 
         return retrieve(LocalDate.now(), entity.getUserId());
@@ -110,6 +116,11 @@ public class TodoHistoryService {
         if(entity.getUserId() == null) {
             log.warn("Unknown user");
             throw new RuntimeException("Unknown user");
+        }
+
+        if(!entity.getTodoDate().isEqual(LocalDate.now())) {
+            log.warn("Todo update time out");
+            throw new RuntimeException("Todo update time out");
         }
     }
 }

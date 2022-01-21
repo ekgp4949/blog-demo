@@ -5,6 +5,7 @@ import com.todo.daily.model.TodoHistoryEntity;
 import com.todo.daily.persistence.TodoHistoryRepository;
 import com.todo.daily.persistence.TodoRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -94,11 +95,13 @@ public class TodoService {
 	 * @param userId 유저 ID
 	 * @return TodoEntity 리스트
 	 * */
+	@Transactional
 	public List<TodoEntity> delete(final TodoEntity entity, final String userId) {
 		validate(entity);
 		
 		try {
 			//todoRepository.delete(entity);
+			LocalDate tomorrow = LocalDate.now().plusDays(1);
 			final Optional<TodoEntity> original = todoRepository.findById(entity.getId());
 			original.ifPresent(todo -> {
 				if(!userId.equals(entity.getUserId())) {
@@ -106,6 +109,9 @@ public class TodoService {
 				}
 				todo.setUseYn(entity.getUseYn());
 				TodoEntity deletedEntity = todoRepository.save(todo);
+
+				// 내일 자 등록된 TodoHistory가 있다면 제거
+				todoHistoryRepository.deleteByParentTodoIdAndTodoDate(deletedEntity.getId(), tomorrow);
 			});
 		} catch(Exception e) {
 			log.error("error deleting entity ", entity.getId(), e);

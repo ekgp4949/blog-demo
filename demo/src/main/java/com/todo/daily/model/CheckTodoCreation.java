@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 public class CheckTodoCreation {
 
     @Id
-    private LocalDate creationDate;
+    private LocalDate todoDate;
 
     @CreationTimestamp
     @Column(updatable = false)
