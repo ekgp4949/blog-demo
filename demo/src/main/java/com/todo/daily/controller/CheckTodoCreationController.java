@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
+
 @RestController
 @RequestMapping("/check")
 public class CheckTodoCreationController {
@@ -16,6 +18,6 @@ public class CheckTodoCreationController {
 
     @GetMapping
     public ResponseEntity<?> check() {
-        return ResponseEntity.ok(service.retrieve());
+        return ResponseEntity.ok(service.check(LocalDate.now()));
     }
 }

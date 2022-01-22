@@ -12,4 +12,6 @@ public interface TodoHistoryRepository extends JpaRepository<TodoHistoryEntity, 
     List<TodoHistoryEntity> findByTodoDateAndUserIdOrderByRegisteredDateTimeAsc(LocalDate date, String userId);
 
     Integer deleteByParentTodoIdAndTodoDate(String parentTodoId, LocalDate date);
+
+    List<TodoHistoryEntity> findByParentTodoIdAndTodoDateGreaterThanEqual(String id, LocalDate now);
 }

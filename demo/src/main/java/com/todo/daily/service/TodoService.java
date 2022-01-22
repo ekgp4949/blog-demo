@@ -24,6 +24,9 @@ public class TodoService {
 	@Autowired
 	private TodoHistoryRepository todoHistoryRepository;
 
+	@Autowired
+	CheckTodoCreationService checkTodoCreationService;
+
 	/**
 	 * 요일별 Todo 추가 생성 시
 	 * @param entity Todo
@@ -39,12 +42,26 @@ public class TodoService {
 		LocalDate now = LocalDate.now();
 		if(entity.getDayOfWeek() == now.getDayOfWeek().getValue()) {
 			todoHistoryRepository.save(TodoHistoryEntity
+				.builder()
+				.userId(savedEntity.getUserId())
+				.title(savedEntity.getTitle())
+				.parentTodoId(savedEntity.getId())
+				.todoDate(now)
+				.build());
+		}
+
+		// 내일 자 배치가 이미 돌아간 경우 내일 요일 Todo 등록시 TodoHistory 등록
+		LocalDate tomorrow = LocalDate.now().plusDays(1);
+		if(entity.getDayOfWeek() == tomorrow.getDayOfWeek().getValue()) {
+			if(checkTodoCreationService.check(tomorrow).equals("Y")) {
+				todoHistoryRepository.save(TodoHistoryEntity
 					.builder()
 					.userId(savedEntity.getUserId())
 					.title(savedEntity.getTitle())
 					.parentTodoId(savedEntity.getId())
-					.todoDate(now)
+					.todoDate(tomorrow)
 					.build());
+			}
 		}
 
 		return todoRepository.findByDayOfWeekAndUserIdAndUseYnOrderByRegisteredDateTimeAsc(
@@ -77,13 +94,23 @@ public class TodoService {
 	 * @param entity Todo
 	 * @return TodoEntity 리스트
 	 * */
+	@Transactional
 	public List<TodoEntity> update(final TodoEntity entity) {
 		validate(entity);
 
+		LocalDate now = LocalDate.now();
 		final Optional<TodoEntity> original = todoRepository.findById(entity.getId());
 		original.ifPresent(todo -> {
 			todo.setTitle(entity.getTitle());
-			todoRepository.save(todo);
+			TodoEntity savedEntity = todoRepository.save(todo);
+
+			// 오늘 내일 해당 TodoHistory 있다면 해당 엔티티 타이틀 업데이트
+			todoHistoryRepository
+				.findByParentTodoIdAndTodoDateGreaterThanEqual(savedEntity.getId(), now)
+				.forEach(item -> {
+					item.setTitle(entity.getTitle());
+					todoHistoryRepository.save(item);
+				});
 		});
 
 		return retrieve(entity.getDayOfWeek(), entity.getUserId());

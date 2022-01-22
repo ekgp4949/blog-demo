@@ -2,6 +2,7 @@ package com.todo.daily.service;
 
 import com.todo.daily.persistence.CheckTodoCreationRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -10,10 +11,11 @@ import java.time.LocalDate;
 @Service
 public class CheckTodoCreationService {
 
+    @Autowired
     private CheckTodoCreationRepository repository;
 
-    public String retrieve() {
-        return repository.findById(LocalDate.now()).isPresent() ? "Y" : "N";
+    public String check(LocalDate localDate) {
+        return repository.findById(localDate).isPresent() ? "Y" : "N";
     }
 
 }
