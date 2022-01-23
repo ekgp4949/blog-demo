@@ -4,10 +4,8 @@ import com.todo.daily.model.StampEntity;
 import com.todo.daily.persistence.StampRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -17,14 +15,11 @@ import java.io.IOException;
 @Service
 public class StampService {
 
-    @Value("${stampImgLocation}")
-    private String stampImgLocation;
-
     @Autowired
     StampRepository repository;
 
     @Autowired
-    FileUploadService fileUploadService;
+    private FileUploadService fileUploadService;
 
     /**
      * 유저의 스탬프 호출
@@ -69,8 +64,7 @@ public class StampService {
 
         String uuid = recentStamp.getId();
         try {
-            savedFileName = fileUploadService.uploadFile(uuid, stampImgLocation,
-                    originalFileName, imgFile.getBytes(), type);
+            savedFileName = fileUploadService.uploadFile(uuid, imgFile, type);
         } catch(IOException e) {
             log.error("img upload error, userId: ", userId, e);
         }
