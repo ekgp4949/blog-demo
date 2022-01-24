@@ -6,10 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,19 +26,20 @@ import java.time.LocalDateTime;
 public class TodoEntity {
 	@Id
 	@GeneratedValue(generator = "system-uuid")
-	@GenericGenerator(name = "system-uuid", strategy = "uuid")
+	@GenericGenerator(name = "system-uuid", strategy = "uuid2")
 	private String id;
 	private String userId;
 	private String title;
 	private int dayOfWeek;
-	@Column(columnDefinition = "varchar2(1) default 'Y'")
+
+	@Column(columnDefinition = "varchar(1) default 'Y'")
 	private String useYn;
 
 	@CreationTimestamp
 	@Column(updatable = false)
 	private LocalDateTime registeredDateTime;
 
-	@CreationTimestamp
-	@Column(updatable = false)
+	@UpdateTimestamp
+	@Column(insertable = false)
 	private LocalDateTime modifiedDateTime;
 }

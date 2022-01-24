@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 public class TodoHistoryEntity {
     @Id
     @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid2")
     private String id;
     private String userId;
     private String title;
@@ -36,8 +36,8 @@ public class TodoHistoryEntity {
     @Column(updatable = false)
     private LocalDateTime registeredDateTime;
 
-    @CreationTimestamp
-    @Column(updatable = false)
+    @UpdateTimestamp
+    @Column(insertable = false)
     private LocalDateTime modifiedDateTime;
 
     private boolean done;

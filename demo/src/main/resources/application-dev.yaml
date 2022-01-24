@@ -3,6 +3,23 @@ spring:
     multipart:
       max-file-size: 20MB
       max-request-size: 100MB
+  autoconfigure:
+    exclude: org.springframework.cloud.aws.autoconfigure.metrics.CloudWatchExportAutoConfiguration
 
-stampImgLocation: /Users/dhk/todo/upload/test
+# VM Option에 -Dcom.amazonaws.sdk.disableEc2Metadata=true 설정
+logging:
+  level:
+    com:
+      amazonaws:
+        util:
+          EC2MetadataUtils: error
+
+cloud:
+  aws:
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+
+stampImgLocation: /Users/dhk/todo/upload/stamp
 uploadPath: file:/Users/dhk/todo/upload/

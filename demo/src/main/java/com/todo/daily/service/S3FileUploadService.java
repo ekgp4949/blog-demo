@@ -41,7 +41,7 @@ public class S3FileUploadService implements FileUploadService {
 
         try(InputStream inputStream = file.getInputStream()) {
             amazonS3Client.putObject(
-                new PutObjectRequest(bucket, "/upload/stamp/"+savedFileName, inputStream, objectMetadata
+                new PutObjectRequest(bucket, "upload/stamp/"+savedFileName, inputStream, objectMetadata
             ).withCannedAcl(CannedAccessControlList.PublicRead));
         } catch(IOException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "파일 업로드에 실패했습니다.");

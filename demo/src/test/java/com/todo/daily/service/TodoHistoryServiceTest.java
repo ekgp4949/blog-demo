@@ -9,6 +9,7 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.TestPropertySource;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -17,6 +18,7 @@ import java.util.List;
 
 @SpringBootTest
 @WithMockUser
+@TestPropertySource(properties = "dev")
 class TodoHistoryServiceTest {
 
     @Autowired
@@ -63,7 +65,7 @@ class TodoHistoryServiceTest {
 
     @Test
     @DisplayName("오늘내일어제자 각 TodoHistory 생성 시도 시 오류 발생 테스트")
-    public void cancleCreationTest() {
+    public void cancelCreationTest() {
         TodoHistoryEntity tomorrowEntity = TodoHistoryEntity.builder()
                 .todoDate(LocalDate.now().plusDays(1))
                 .userId("user")

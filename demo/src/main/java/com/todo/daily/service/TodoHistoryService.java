@@ -55,8 +55,8 @@ public class TodoHistoryService {
                         .build()
                 ).collect(Collectors.toList());
             checkTodoCreationRepository.save(CheckTodoCreation.builder()
-                    .todoDate(tomorrow)
-                    .build());
+                .todoDate(tomorrow)
+                .build());
             todoHistoryRepository.saveAll(items);
         }
     }

@@ -9,6 +9,7 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.TestPropertySource;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @SpringBootTest
 @WithMockUser
+@TestPropertySource(properties = "dev")
 public class TodoServiceTest {
     @Autowired
     TodoService todoService;
@@ -43,6 +45,7 @@ public class TodoServiceTest {
                 .title("doSomething")
                 .userId(userId)
                 .dayOfWeek(dayOfWeek)
+                .useYn("Y")
                 .build();
         TodoEntity savedEntity =  todoRepository.save(entity);
 
@@ -66,6 +69,7 @@ public class TodoServiceTest {
         TodoEntity entity = TodoEntity.builder()
                 .title("doSomething")
                 .userId(userId)
+                .useYn("Y")
                 .dayOfWeek(dayOfWeek)
                 .build();
         TodoEntity savedEntity =  todoRepository.save(entity);
@@ -78,6 +82,7 @@ public class TodoServiceTest {
         TodoEntity entity2 = TodoEntity.builder()
                 .title("doSomething")
                 .userId(userId)
+                .useYn("Y")
                 .dayOfWeek(dayOfWeek)
                 .build();
         // 유저가 새로운 Todo 등록시

@@ -28,7 +28,7 @@ import java.time.LocalDateTime;
 public class StampEntity {
 	@Id
 	@GeneratedValue(generator = "system-uuid")
-	@GenericGenerator(name = "system-uuid", strategy = "uuid")
+	@GenericGenerator(name = "system-uuid", strategy = "uuid2")
 	private String id;
 	private String userId;
 	private String goodStamp;
