@@ -13,7 +13,7 @@ class ScreenRoutes extends React.Component {
 
   render() {
     return (
-      <Box height="80%">
+      <Box height="78%" minHeight="592px">
         <Paper
           variant="outlined"
           square

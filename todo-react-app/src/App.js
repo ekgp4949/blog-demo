@@ -9,9 +9,8 @@ import { Box } from '@mui/system';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { navValue: "today" }
+    this.state = { navValue: props.value }
   }
-
 
   changeNavigationValue = (value) => {
     this.setState({ navValue: value });
@@ -19,7 +18,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <Box className="App" height="100%">
+      <Box className="App" height="100%" minHeight="592px">
         <NavigationBar />
         <ScreenRoutes changeNavigationValue={this.changeNavigationValue}/>
         <TodoBottomNavigation value={this.state.navValue} />

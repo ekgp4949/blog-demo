@@ -54,7 +54,7 @@ class StampModal extends React.Component{
       top: '50%',
       left: '50%',
       transform: 'translate(-50%, -50%)',
-      width: 400,
+      width: "30%",
       bgcolor: 'background.paper',
       border: '2px solid #000',
       boxShadow: 24,
@@ -78,17 +78,17 @@ class StampModal extends React.Component{
           open={ this.state.open }
           onClose={ this.handleClose }
           aria-labelledby="stampUpdateModal"
-          >
+        >
           <Box sx={style}>
             <Typography id="stampUpdateModal" variant="h6" component="h2">
               { this.state.stampType }
             </Typography>
-            <Box mt={4}>
-              <Grid container>
-                <Grid item sm={4}>
-                  { stamp }
-                </Grid>
-                <Grid item sm={4}>
+            <Box mt={2}>
+              <Box style={{ justifyContent: "center", display: "flex" }}>
+                { stamp }
+              </Box>
+              <Grid container style={{ justifyContent: "center", display: "flex" }}>
+                <Grid item sm={8} mt={1}>
                   <Button
                     variant="contained"
                     component="label"
@@ -103,7 +103,7 @@ class StampModal extends React.Component{
                     />
                   </Button>
                 </Grid>
-                <Grid item sm={4}>
+                <Grid item sm={4} mt={1}>
                   <Button
                     startIcon={ <Save /> }
                     variant="outlined"

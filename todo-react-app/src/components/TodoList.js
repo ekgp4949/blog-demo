@@ -6,6 +6,21 @@ import { call } from "../service/ApiService"
 import Loading from '../Loading'
 import AddTodo from "./AddTodo";
 
+function getDate(date) {
+  if(!date) date = new Date();
+  const now = date;
+  const year = now.getFullYear();
+  let month = now.getMonth()+1;
+  if(month < 10) {
+    month = "0" + month;
+  }
+  let day = now.getDate();
+  if(day < 10) {
+    day = "0" + day;
+  }
+  return year + "-" + month + "-" + day;
+}
+
 class TodoList extends React.Component {
 
   constructor(props) {
@@ -23,6 +38,11 @@ class TodoList extends React.Component {
   };
 
   add = (item) => {
+    if(this.state.todoDate !== getDate()) {
+      alert("Cannot update: 오늘 자 데이터가 아닙니다.");
+      return;
+    }
+
     call("/todoHistory", "POST", item).then((response) => 
       this.setState({ items: response.data, loading: false })
     ).catch((error) => {
@@ -31,6 +51,11 @@ class TodoList extends React.Component {
   };
 
   delete = (item) => {
+    if(this.state.todoDate !== getDate()) {
+      alert("Cannot update: 오늘 자 데이터가 아닙니다.");
+      return;
+    }
+
     call("/todoHistory", "DELETE", item).then((response) => 
       this.setState({ items : response.data, loading: false })
     ).catch((error) => {
@@ -39,6 +64,11 @@ class TodoList extends React.Component {
   };
 
   update = (item) => {
+    if(this.state.todoDate !== getDate()) {
+      alert("Cannot update: 오늘 자 데이터가 아닙니다.");
+      return;
+    }
+    
     call("/todoHistory", "PUT", item).then((response) => 
       this.setState({ items: response.data, loading: false })
     ).catch((error) => {

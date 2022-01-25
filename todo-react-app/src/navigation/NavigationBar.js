@@ -16,7 +16,7 @@ class NavigationBar extends React.Component {
                   오늘의 할 일
                 </Typography>
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xs={4}>
                 <Box borderRadius={1} 
                   sx={{ boxShadow: "inset 0 0 2px 2px #888", backgroundColor: "whitesmoke" }}>
                   <Timer />

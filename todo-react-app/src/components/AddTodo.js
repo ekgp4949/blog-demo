@@ -30,8 +30,8 @@ class AddTodo extends React.Component {
 
   render() {
     return (
-      <Grid container spacing={2} width="100%">
-        <Grid xs={10} md={11} item>
+      <Grid container spacing={2} width="100%" className="inputContainer">
+        <Grid xs={10} md={10} item>
           <TextField
             placeholder="Add Todo Here" 
             fullWidth
@@ -42,7 +42,7 @@ class AddTodo extends React.Component {
             value={this.state.item.title}
           />
         </Grid>
-        <Grid xs={2} md={1} item>
+        <Grid xs={2} md={2} item>
           <Button
               fullWidth
               size="small"
