@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.UUID;
 
 @Profile("dev")
 @Slf4j
@@ -21,11 +22,12 @@ public class LocalFileUploadService implements FileUploadService {
     @Value("${stampImgLocation}")
     private String stampImgLocation;
 
-    public String uploadFile(String uuid, MultipartFile file, String type)
+    public String uploadFile(MultipartFile file, String type)
             throws IOException {
         String originalFileName = file.getOriginalFilename();
         String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
-        String savedFileName = uuid + "_" + type + extension;
+        String uuid = UUID.randomUUID().toString();
+        String savedFileName = uuid + extension;
         String fileUploadFullUrl = stampImgLocation + "/" + savedFileName;
 
         // 스탬프 저장 디렉토리 없을 시 폴더 재생성

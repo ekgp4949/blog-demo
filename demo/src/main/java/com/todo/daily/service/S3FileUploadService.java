@@ -17,6 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.UUID;
 
 @Profile("prod")
 @Slf4j
@@ -30,10 +31,11 @@ public class S3FileUploadService implements FileUploadService {
     @Autowired
     private AmazonS3Client amazonS3Client;
 
-    public String uploadFile(String uuid, MultipartFile file, String type) {
+    public String uploadFile(MultipartFile file, String type) {
         String originalFileName = file.getOriginalFilename();
         String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
-        String savedFileName = uuid + "_" + type + extension;
+        String uuid = UUID.randomUUID().toString();
+        String savedFileName = uuid + extension;
 
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentLength(file.getSize());

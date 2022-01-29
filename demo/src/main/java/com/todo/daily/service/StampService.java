@@ -62,9 +62,8 @@ public class StampService {
             throw new RuntimeException("FileName cannot be null");
         }
 
-        String uuid = recentStamp.getId();
         try {
-            savedFileName = fileUploadService.uploadFile(uuid, imgFile, type);
+            savedFileName = fileUploadService.uploadFile(imgFile, type);
         } catch(IOException e) {
             log.error("img upload error, userId: ", userId, e);
         }
