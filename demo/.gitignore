@@ -259,4 +259,5 @@ gradle-app.setting
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
 
-src/main/resources/application-s3.yaml
+/Procfile
+/src/main/resources/application-s3.yaml

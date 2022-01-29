@@ -37,6 +37,31 @@ dependencies {
 
 	// https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-aws
 	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+
+	implementation 'org.springframework.boot:spring-boot-gradle-plugin:2.6.3'
+}
+
+bootJar {
+	archiveFileName = "myapp.${archiveExtension.get()}"
+}
+
+task buildZip() {
+	doFirst {
+		exec {
+			commandLine('./gradlew', 'clean', 'build')
+		}
+	}
+	doLast {
+		copy {
+			from('build/libs/myapp.jar')
+			into(".")
+		}
+	}
+	doLast{
+		exec {
+			commandLine('zip', '-r', 'todo_source_bundle.zip', '.platform', 'Procfile', 'myapp.jar')
+		}
+	}
 }
 
 test {
