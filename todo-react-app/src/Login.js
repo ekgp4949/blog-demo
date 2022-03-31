@@ -12,9 +12,12 @@ class Login extends React.Component {
     event.preventDefault();
     // event.target 은 <form> node가 옴
     const data = new FormData(event.target);
-    const email = data.get("email");
-    const password = data.get("password");
-
+    let email = data.get("email");
+    let password = data.get("password");
+    if(event.nativeEvent.submitter.id === "testAccountLogin") {
+      email = "a";
+      password = "a";
+    }
     signin({ email: email, password: password });
   }
 
@@ -63,6 +66,17 @@ class Login extends React.Component {
                 color="primary"
               >
                 로그인
+              </Button>
+            </Grid>
+            <Grid item xs={12}>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                id="testAccountLogin"
+              >
+                테스트 계정 경험하기
               </Button>
             </Grid>
             <Grid item>
