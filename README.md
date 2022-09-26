@@ -4,4 +4,4 @@
 ## AWS 서버 구축 적용
 [elasticbeanstalk, s3]
 
-Service URL: <a href="https://app.dhktodoapp.com">https://app.dhktodoapp.com</a>
+<서비스 종료>
